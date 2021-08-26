@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+<script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
+ {{ ckeditor.load() }}
+
+<!-- BLOCK: WELCOME -->
+{% block welcome %}
+	<div>
+		<br>
+		{% if g.user['username'] == 'admin' %}
+			<a class="action" href="{{ url_for('index.welcome_create') }}">Create</a>
+			<a class="action" href="{{ url_for('index.welcome_update') }}">Edit</a>
+		{% endif %}
+	</div>
+  		<div class="welcomeContainer">
+
+			<div class="welcome">{{ welcomes.greeting[0]|safe }}</div>
+
+		</div>
+	
+		<hr>
+{% endblock %}
+
+
+<!-- BLOCK: HEADER -->
+{% block header %}
+	<h1 style="font-size: 300%;">{% block title %}Announcements{% endblock %}</h1>
+ 	{% if g.user['username'] == 'admin' %}
+		<a class="action" href="{{ url_for('announcements.announcements_create') }}">New</a>
+  	{% endif %}
+{% endblock %}
+
+
+<!-- BLOCK: CONTENT -->
+{% block content %}
+	<script type=text/javascript>
+		// For Announcements click-behavior
+		var announcements_size = {{ announcements.length|tojson|safe }};
+	
+		for (let i = 0; i < announcements_size; i++) {
+	  		$(document).ready(
+				function() {
+		  			$('[name="announcement_divContainer[' + i + ']"]').click(
+			  			function() {
+							$('[name="announcement_p[' + i + ']"]').slideToggle();
+						});
+		  			});
+			}
+
+		// For displaying latest Announcement as default
+	  	$(document).ready(function() {
+			$('[name="announcement_p[0]"]').show(); });
+	</script>
+  	{% set ns = namespace(i = 0) %}
+  	{% for m in range(announcements.length) %}
+		{% set announcement_divContainer = 'announcement_divContainer[{0}]'.format(ns.i) %}
+		{% set announcement_p = 'announcement_p[{0}]'.format(ns.i) %}
+		<article class="post">
+	  		<header>
+				<div>
+					<div class="announcement_divContainer" name="{{ announcement_divContainer }}">
+						<div class="announcement_div">
+		  					<h1>{{ announcements.subject[m] }}</h1>
+		  					{% if announcements.updated[m] %}
+								<div class="about">by {{ announcements.username[m] }}.
+			  						<b>Created:</b> {{ announcements.created_text[m] }},
+			  						<b>Updated:</b> {{ announcements.updated[m] }}.
+								</div>
+		  					{% else %}
+								<div class="about">by {{ announcements.username[m] }}.
+			  						<b>Created:</b> {{ announcements.created_text[m] }}.
+								</div>
+		  					{% endif %}
+						</div>
+					</div>
+				</div>
+				{% if g.user['username'] == 'admin' %}
+		  			<a class="action" href="{{ url_for('announcements.announcements_update', id=announcements['id'][m]) }}">Edit</a>
+				{% endif %}
+	  		</header>
+	  		<!-- Tried using CKEditor for Announcements too
+	  			 But JSON breaks the editor.  E.g., Marking the announcement posts as
+	  			 safe via "post|tojson|safe" breaks CKEditor's text. -->
+	  		<p class="announcement_p" name={{announcement_p}}>{{ announcements.body[m] }}</p>
+		</article>
+		{% set ns.i = ns.i + 1 %}
+		{% if not loop.last %}
+	  		<hr>
+		{% endif %}
+  	{% endfor %}
+  	<hr>
+{% endblock %}
+

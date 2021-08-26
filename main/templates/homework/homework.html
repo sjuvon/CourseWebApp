@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block header %}
+	<h1>{% block title %}Homework{% endblock %}</h1>
+	{% if g.user['username'] == 'admin' %}
+		<a class="action" href="{{ url_for('homework.homework_create') }}">New Assignment</a>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	{% for h in range(homeworks.length) %}
+		<article class="post">
+			<header class="homework_post">
+				<div class="homework_postContainer">
+					<div class="homework_post">
+						<h1>Homework {{ homeworks.id[h] }}: <a href="/gg">{{ homeworks.title[h] }}</a></h1>
+						<span style="color: slategray; font-weight: bold; font-size: 110%;">Due: {{ homeworks.due[h] }}</span>
+						<div class="about">Keywords: {{ homeworks.keywords[h] }}</div>
+					</div>
+				</div>
+				{% if g.user['username'] == 'admin' %}
+					<a class="action" href="{{ url_for('homework.homework_update', id=homeworks.id[h] ) }}">Edit</a>
+				{% endif %}
+			</header>
+		</article>
+	{% endfor %}
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% block header %}
+    <h1>{% block title %}New Lecture{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
+        {{ form.csrf_token() }}
+
+        {% for field in form if (field.name != 'csrf_token') and (field.name != 'submit') %}
+            {% if field.name == 'Zahl' %}
+                {{ field.label(text='Lecture No.') }}
+                {{ field }}
+            {% elif field.name == 'file_lecture' %}
+                {{ field.label(text='File') }}
+                {{ field }}
+            {% else %}
+                {{ field.label }}
+                {{ field }}
+            {% endif %}
+        {% endfor %}
+
+        <hr>
+
+        {{ form.submit() }}
+        <a><button type="button" onClick = "this.form.reset()">Reset</button></a>
+        <hr><hr>
+        <a href="{{ url_for('lectures.lectures_index') }}"><button type="button">Back to Lectures</button></a>
+    </form>
+{% endblock %}

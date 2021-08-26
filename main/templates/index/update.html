@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Edit Welcome{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {{ form.csrf_token() }}
+
+        {% for field in form if (field.name != 'csrf_token') and (field.name != 'submit') %}
+            {{ field.label }}
+            {{ field }}
+        {% endfor %}
+
+        <hr>
+
+        {{ form.submit() }}
+        <a href="{{ url_for('index') }}"><button type="button">Back to Main Page</button></a>
+    </form>
+    {{ ckeditor.load() }}
+    {{ ckeditor.config(name='greeting') }}
+{% endblock %}

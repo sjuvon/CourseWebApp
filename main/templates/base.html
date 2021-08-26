@@ -1,0 +1,43 @@
+{# 18 JUN 2021 FOR AG_app #}
+<!doctype html>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type=text/javascript async>
+  // For disappearing Flashed messages
+  $( setTimeout(function() {
+        $('.flash').fadeOut('fast');
+      }, 2500)
+   );
+</script>
+
+{% set active_page = active_page|default('index') -%}
+
+<title>Math 7142, Spring 2019</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<nav>
+<h1><a href="{{ url_for('index') }}">Algebraic Geometry II</a></h1>
+  <ul>
+      <li {% if request.endpoint == 'homework.homework_index' %} class="active" {% endif %}><a class="nounderline" href="{{ url_for('homework.homework_index') }}">Homework</a>
+      <li {% if request.endpoint == 'lectures.lectures_index' %} class="active" {% endif %}><a class="nounderline" href="{{ url_for('lectures.lectures_index') }}">Lectures</a>
+    {% if g.user %}
+      <li><span>{{ g.user['username'] }}</span>
+      <li><a class="nounderline" href="{{ url_for('auth.logout') }}">Log Out</a>
+    {% else %}
+      <li {% if request.endpoint == 'auth.register' %} class="active" {% endif %}><a class="nounderline" href="{{ url_for('auth.register') }}">Register</a>
+      <li {% if request.endpoint == 'auth.login' %} class="active" {% endif %}><a class="nounderline" href="{{ url_for('auth.login') }}">Log In</a>
+    {% endif %}
+  </ul>
+</nav>
+
+<section class="content">
+  {% block welcome %}{% endblock %}
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  {% block content %}{% endblock %}
+</section>
+
+

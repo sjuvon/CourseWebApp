@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block header %}
+	<h1>{% block title %}Lectures{% endblock %}</h1>
+	{% if g.user['username'] == 'admin' %}
+		<a class="action" href="{{ url_for('lectures.lectures_create') }}">New Lecture</a>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	{% for wk in range(1, M+1) %}
+	  	{% for l in range(lectures.length) %} <!-- NEED TO MAKE THIS MORE EFFICIENT -->
+			{% if lectures.week[l] == wk %}
+				<article class="post">
+					<header>
+						<div style="position: relative;">
+							<h1><span class="BCE">Lecture {{ lectures.id[l] }}: <a href="/gg">{{ lectures.title[l] }}</a><span class="CE">{{ lectures.summary[l] }}</span></span></h1>
+							<div class="about">{{ lectures.day[l] }}</div>
+						</div>
+						{% if g.user['username'] == 'admin' %}
+							<a class="action" href="{{ url_for('lectures.lectures_update', id=lectures.id[l] ) }}">Edit</a>
+						{% endif %}
+					</header>
+				</article>
+			{% endif %}
+			{% if lectures.week[l] > wk %} <!-- THIS TO GET CORRECT <hr> AFTER EACH WEEK -->
+		 		{% break %}
+			{% endif %}
+	  	{% endfor %}
+	 	<hr>
+	{% endfor %}
+{% endblock %}
