@@ -14,13 +14,13 @@ from main import functions
 	app's strategy in general):
 
 	The main idea is to use the Model class below as proxy
-	to the database; this is done in the following way:
-		- a Model instance corresponds to a database table,
+	to the database.  This is done with the following scheme:
+		- a Model instance corresponds to a database table row,
 		- the Model's attributes to the corresponding
 		  table's columns, and
 		- Model methods to database operations.
 	I.e.,
-		Model instance	<~~~>	Database table
+		Model instance	<~~~>	Database table row
 		Model.attribute	<~~~>	Table column
 		Model.method()	<~~~>	Table operation
 
