@@ -10,8 +10,8 @@ from main import functions
 
 
 """
-	Some words on the following construction (and the app
-	philosophy in general):
+	Some words on the following construction (and the
+	technical philosophy in general):
 
 	The main idea is to use the Model class below as proxy
 	to the database; this is done in the following way:
@@ -19,29 +19,30 @@ from main import functions
 		- the Model's attributes to the corresponding
 		  table's columns, and
 		- Model methods to database operations.
-	E.g.,
-		Model instance		<~~~>	Database table
-		Model.attribute		<~~~>	Table column
-		Model.method		<~~~>	Table operation
+	I.e.,
+		Model instance	<~~~>	Database table
+		Model.attribute	<~~~>	Table column
+		Model.method()	<~~~>	Table operation
 
-	With this in hand, we transfer user-data to and from
+	With this in mind, we transfer user-data to and from
 	the database by having Model classes interact with Form
 	classes.  (See 'main.forms' for the Form side of things.)
-	This is ultimately done by having the Model's model.__dict__
-	interact with the Form's form.formContent.
+	This is ultimately done by interfacing the Model's
+	__dict__ with the Form's formContent:
+
+		Model.__dict__ 	<~~~>	Form.formContent
 
 	That's the gist of the app.  Sadly, there is one important
 	place where the
 
-		Model <~~~> Database
+		Model	<~~~>	Database
 
 	correspondence unfortunately breaks down: when the Model
 	method 'db_select' is set to 'all=True'.  In this case,
-	the method does not render the Model's attributes as
-	database entries; instead, it returns a list of database
-	rows (with each row as a dictionary).  This makes things
-	much easier to work with Views.
-																"""
+	the method does not set the Model's attributes to data-
+	base values; instead, it returns a list of database
+	rows (with each row as a dictionary).  This makes it much
+	easier to work with Views.								"""
 
 
 ### BEGIN CLASS Model

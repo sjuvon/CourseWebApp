@@ -30,7 +30,7 @@ from main import models
 """
 	The general purpose of these Forms: to record
 	user input.  This input will eventually end up in
-	the database, which happens when Forms interface
+	the database, which happens when Forms interact
 	with Model classes.
 
 	The Forms themselves come in two flavors: for
@@ -94,7 +94,7 @@ def Formula_Create(*args, **kwargs):
 	### (E.g., 'StringField' and database table names.)
 	### The if/else condition handles these two cases.
 
-	### Note: The kwargs-values are strings.
+	### Note: The kwarg-values are strings.
 
 	Fach = { 'File', 'Integer', 'String', 'TextArea', 'CKEditor' }
 	for key, value in kwargs.items():
@@ -117,8 +117,8 @@ def Formula_Create(*args, **kwargs):
 
 
 ### Virtually everything below is the same as above.  The only
-### difference is that kwargs-values here may be tuples in
-### addition to strings as above.
+### difference is that kwarg-values here may be tuples in
+### addition to strings.
 
 ### BEGIN CLASS Form_Update
 def Formula_Update(**kwargs):
