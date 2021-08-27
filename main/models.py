@@ -10,11 +10,9 @@ from main import functions
 
 
 """
-	Some words on the following construction (and the
-	app's strategy in general):
-
-	The main idea is to use the Model class below as proxy
-	to the database.  This is done with the following scheme:
+	The main idea is to use the Model class below as
+	proxy to the database.  This is done with the foll-
+	owing scheme:
 		- a Model instance corresponds to a database table row,
 		- the Model's attributes to the corresponding
 		  row's entries, and
@@ -22,7 +20,7 @@ from main import functions
 	I.e.,
 		Model instance	<~~~>	Table row
 		Model.attribute	<~~~>	Row entry
-		Model.method()	<~~~>	Table operation
+		Model.method()	<~~~>	Database operation
 
 	With this in mind, we transfer user-data to and from
 	the database by having Model classes interact with Form
@@ -39,10 +37,10 @@ from main import functions
 
 	correspondence unfortunately breaks down: when the Model
 	method 'db_select' is set to 'all=True'.  In this case,
-	the method does not set the Model's attributes to data-
-	base values; instead, it returns a list of database
-	rows (with each row as a dictionary).  This makes it much
-	easier to work with Views.								"""
+	the method does not operate on the Model's attributes;
+	instead, it returns a list of database rows (with each
+	row as a dictionary).  This makes it much easier to work
+	with Views.												"""
 
 
 ### BEGIN CLASS Model
