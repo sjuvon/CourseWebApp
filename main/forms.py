@@ -28,13 +28,12 @@ from main import models
 
 
 """
-	The general purpose to these Form classes below:
-	to record user input.  This data will eventually
-	end up in the database; this happens when the
-	Forms eventually interface with the Model classes
-	in the appropriate Views.
+	The general purpose of these Forms: to record
+	user input.  This input will eventually end up in
+	the database, which happens when Forms interface
+	with Model classes.
 
-	The forms themselves come in two flavors: for
+	The Forms themselves come in two flavors: for
 	creating posts and updating.  They are
 	implemented as classes made dynamically.
 											"""
@@ -46,7 +45,7 @@ def Formula_Create(*args, **kwargs):
 
 		### dict: self.formContent
 		### This is the salient part of the class.
-		### All user input destined for the database is
+		### All user-input destined for the database is
 		### recorded here; it will be handed off
 		### to Model classes for database entry...
 
@@ -92,10 +91,10 @@ def Formula_Create(*args, **kwargs):
 
 	### We've chosen to dynamically make everything:
 	### from form fields to database-related details.
-	### (E.g., 'StringField' vs Database table name.)
+	### (E.g., 'StringField' and database table names.)
 	### The if/else condition handles these two cases.
 
-	### Note: The values are strings.
+	### Note: The kwargs-values are strings.
 
 	Fach = { 'File', 'Integer', 'String', 'TextArea', 'CKEditor' }
 	for key, value in kwargs.items():
@@ -118,8 +117,8 @@ def Formula_Create(*args, **kwargs):
 
 
 ### Virtually everything below is the same as above.  The only
-### difference is that the input here comes in the
-### form of tuples, as opposed to strings above.
+### difference is that kwargs-values here may be tuples in
+### addition to strings as above.
 
 ### BEGIN CLASS Form_Update
 def Formula_Update(**kwargs):
@@ -159,7 +158,7 @@ def Formula_Update(**kwargs):
 
 
 	### Again, dynamically create Form_Update attributes.
-	### And the values here are tuples.
+	### And the values here can be tuples.
 	Fach = { 'File', 'Integer', 'String', 'TextArea', 'CKEditor' }
 	for key, value in kwargs.items():
 		if type(value) != tuple:
