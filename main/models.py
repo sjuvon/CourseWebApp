@@ -11,7 +11,7 @@ from main import functions
 
 """
 	Some words on the following construction (and the
-	technical philosophy in general):
+	app's strategy in general):
 
 	The main idea is to use the Model class below as proxy
 	to the database; this is done in the following way:
