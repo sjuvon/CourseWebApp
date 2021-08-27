@@ -30,17 +30,18 @@ from main import functions
 
 		Model.__dict__ 	<~~~>	Form.formContent
 
-	That's the gist of the app.  Sadly, there is one important
-	place where the
+	That's the gist of it.
+
+	N.B. There is one important place where the
 
 		Model	<~~~>	Database
 
-	correspondence unfortunately breaks down: when the Model
-	method 'db_select' is set to 'all=True'.  In this case,
-	the method does not operate on the Model's attributes;
-	instead, it returns a list of database rows (with each
-	row as a dictionary).  This makes it much easier to work
-	with Views.												"""
+	correspondence returns something interesting: when the
+	Model method 'db_select' is set to 'all=True'.  In this
+	case, the method returns a list of database rows (with each
+	row as a dictionary), instead of being a simple operation
+	on the Model or Database.  This makes it much easier to
+	work with Views.											"""
 
 
 ### BEGIN CLASS Model
