@@ -67,15 +67,17 @@ class Model():
 	### INSERT entry into database
 	def db_insert(self):
 		database.scrub(self.table)
-		#database.scrub_list(self.__dict__.keys())
+		database.scrub_list(self.__dict__.keys())
 
 		db = database.db_open()
 
-		values = [ f":{key}" for key in self.__dict__.keys() ]
-		values = ', '.join(values)
-		values = '(' + values + ')'
+		query = database.db_queryBuilder(
+					operation='INSERT',
+					table=self.table,
+					dictionary=self.__dict__
+					)
 
-		db.execute(f"INSERT INTO {self.table} {tuple(self.__dict__.keys())} VALUES {values}", self.__dict__)
+		db.execute(query, self.__dict__)
 		db.commit()
 
 
@@ -83,16 +85,18 @@ class Model():
 	def db_update(self, idd:int):
 		database.scrub(self.table)
 		database.scrub(str(idd))
-		#database.scrub_list(self.__dict__.keys())
+		database.scrub_list(self.__dict__.keys())
 
 		db = database.db_open()
 
-		set_ = [ f"{key} = :{key}" for key in self.__dict__.keys() ]
-		set_ = ', '.join(set_)
+		query = database.db_queryBuilder(
+			operation='UPDATE',
+			table=self.table,
+			idd=idd,
+			dictionary=self.__dict__
+			)
 
-		update = f"UPDATE {self.table} SET {set_} WHERE id = '{idd}'"
-
-		db.execute(f"{update}", self.__dict__)
+		db.execute(query, self.__dict__)
 		db.commit()
 
 

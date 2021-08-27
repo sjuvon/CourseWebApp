@@ -59,8 +59,8 @@ def scrub(string,special=False):
 			if x in S:
 				abort(400)
 		
-	elif not string.isalnum():
-		abort(400)
+	elif not string.isalnum() and '_' not in string:
+				abort(400)
 
 def scrub_list(arr):
 	for entry in arr:
@@ -78,28 +78,46 @@ def scrub_dict(dictionary):
 			pass
 
 
+def db_queryBuilder(
+	operation:str='SELECT', table:str=None, what:str='*', join=False, where:dict=None, order:str=None, limit:str=None, all=False, idd:int=None, dictionary:dict=None):
+
+	### The idea here is to construct the SQL statement
+	### "SELECT {what} FROM {table} JOIN user ON {table}.author_id = user.id WHERE {where} ORDER BY {order} LIMIT {limit}"
+	if operation == 'SELECT' or operation == 'select':
+		query = f"SELECT {what} FROM {table}"
+		if join:
+			query = query + f" JOIN user ON {table}.author_id = user.id"		
+		if where:
+			wo = [ f"{table}.{key} = :{key}" for key in where.keys() ]
+			wo = ' AND '.join(wo)
+			query = query + f" WHERE {wo}"
+		if order:
+			query = query + f" ORDER BY {order}"
+		if limit:
+			query = query + f" LIMIT {limit}"
+		return query
+
+	### "INSERT INTO {table} {dictionary.keys()} VALUES {values}"
+	elif operation == 'INSERT' or operation == 'insert':
+		values = [ f":{key}" for key in dictionary.keys() ]
+		values = ', '.join(values)
+		values = '(' + values + ')'
+		return f"INSERT INTO {table} {tuple(dictionary.keys())} VALUES {values}"
+
+	### "UPDATE {table} SET {set_} WHERE id = '{idd}' "
+	elif operation == 'UPDATE' or operation == 'update':		
+		set_ = [ f"{key} = :{key}" for key in dictionary.keys() ]
+		set_ = ', '.join(set_)
+		return f"UPDATE {table} SET {set_} WHERE id = '{idd}'"
+
+
 ### QUERY (SELECT) entry from database
 def db_query(table:str, what:str='*', join=False, where:dict=None, order:str=None, limit:str=None, all=False):
 	scrub_dict(locals())
 
 	db = db_open()
-
-	"""
-	The following is to build:
-	query = f'SELECT {what} FROM {self.table} JOIN user ON {self.table}.author_id = user.id WHERE {where} ORDER BY {order} LIMIT {limit}'
-																																	"""
-
-	query = f"SELECT {what} FROM {table}"
-	if join:
-		query = query + f" JOIN user ON {table}.author_id = user.id"		
-	if where:
-		wo = [ f"{table}.{key} = :{key}" for key in where.keys() ]
-		wo = ' AND '.join(wo)
-		query = query + f" WHERE {wo}"
-	if order:
-		query = query + f" ORDER BY {order}"
-	if limit:
-		query = query + f" LIMIT {limit}"
+	query = db_queryBuilder(
+		operation='SELECT', table=table, what=what, join=join, where=where, order=order, limit=limit, all=all, idd=None, dictionary=None)
 
 	if where:
 		return db.execute(query, where).fetchall() if all else db.execute(query, where).fetchone()
