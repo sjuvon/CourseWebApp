@@ -11,7 +11,7 @@ from main import functions
 
 """
 	The Model class acts as proxy to the database as follows:
-		- a Model instance corresponds to a database table row,
+		- a Model corresponds to a database table row,
 		- the Model's attributes to the row's entries, and
 		- Model methods to database operations.
 	I.e.,
@@ -53,7 +53,7 @@ class Model():
 			setattr( self, f"{key}", f"{value}" )
 
 	def __repr__(self):
-		return f"Model for database operations.  Use attribute '__dict__' for database table's columns."
+		return f"Model for database.  Use attribute '__dict__' for data."
 
 
 	### Method for SQL SELECT operation
