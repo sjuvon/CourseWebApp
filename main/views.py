@@ -39,6 +39,7 @@ def index():
 @bp.route('/welcome', methods=('GET', 'POST'))
 @functions.admin_required
 def welcome_create():
+	welcome = models.Model( table='welcome' )
 
 	form = forms.Formula_Create(
 					table='welcome',
@@ -49,7 +50,6 @@ def welcome_create():
 		form.formContent['author_id'] = g.user['id']
 		form.formulateContent()
 
-		welcome = models.Model( table='welcome' )
 		welcome.__dict__ = form.formContent
 		welcome.db_insert()
 
