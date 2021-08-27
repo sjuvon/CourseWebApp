@@ -1,4 +1,4 @@
-### CourseWebApp.Forms
+### CourseWebApp.forms
 
 """
 	Module for webform used throughout app
@@ -6,7 +6,7 @@
 			'announcements'
 			'homework'
 			'lectures'
-			'welcome'	(Located in main view)
+			'welcome'	(Located in 'main.view')
 	N.B.	The Authentication module 'auth'
 			uses its own special form.
 											"""
@@ -28,7 +28,15 @@ from main import models
 
 
 """
-	Comment on the constructions below
+	The general purpose to these Form classes below:
+	to record user input.  This data will eventually
+	end up in the database; this happens when the
+	Forms eventually interface with the Model classes
+	in the appropriate Views.
+
+	The forms themselves come in two flavors: for
+	creating posts and updating.  They are
+	implemented as classes made dynamically.
 											"""
 
 ### BEGIN CLASS Form_Create
@@ -40,12 +48,12 @@ def Formula_Create(*args, **kwargs):
 		### This is the salient part of the class.
 		### All user input destined for the database is
 		### recorded here; it will be handed off
-		### to the model for database entry...
+		### to Model classes for database entry...
 
 		formContent = {}
 
 		### ...and this is the method that writes to
-		### formContent with that final content.
+		### formContent with that final content:
 
 		def formulateContent(self):
 			Fields = { 'CSRFTokenField', 'SubmitField' }
@@ -58,7 +66,7 @@ def Formula_Create(*args, **kwargs):
 						self.formContent[field.name] = field.data
 
 		### For displaying validation errors
-		### from user input
+		### in user input
 		def outtakes(self):
 			if self.errors:
 				for error in self.errors.values():
@@ -73,21 +81,21 @@ def Formula_Create(*args, **kwargs):
 										where={ 'id': self.Zahl.data },
 										all=False)
 		
-				### To verify that we're creating a valid lecture/assignment
+				### The upshot: to verify that we're creating a valid lecture/assignment
 				if check_exists:
 					Table = self.table.capitalize()
 					raise ValidationError(f"{Table} {self.Zahl.data} already exists")
 
 
-	### Dynamically create Form_Create attributes
-	### The previous functions handled the basic attributes and methods
-	### of the class.  The following final piece of code
-	### instantiates the class, done dynamically.
+	### Finally, the portion of the factory that
+	### makes form attributes.
 
-	### There are two basic types of data to instantiate:
-	### 1) User input (i.e., fields)
-	### 2) Database details (i.e., table name, user id)
-	### The if/else condition handles those two cases.
+	### We've chosen to dynamically make everything:
+	### from form fields to database-related details.
+	### (E.g., 'StringField' vs Database table name.)
+	### The if/else condition handles these two cases.
+
+	### Note: The values are strings.
 
 	Fach = { 'File', 'Integer', 'String', 'TextArea', 'CKEditor' }
 	for key, value in kwargs.items():
@@ -106,8 +114,12 @@ def Formula_Create(*args, **kwargs):
 
 
 	return Form_Create()
-																			### END CLASS Form_Create
+																		### END CLASS Form_Create
 
+
+### Virtually everything below is the same as above.  The only
+### difference is that the input here comes in the
+### form of tuples, as opposed to strings above.
 
 ### BEGIN CLASS Form_Update
 def Formula_Update(**kwargs):
@@ -116,8 +128,6 @@ def Formula_Update(**kwargs):
 
 		formContent = {}
 
-		### To update form after user input
-		### for eventual database entry
 		def formulateContent(self):
 			Fields = { 'CSRFTokenField', 'SubmitField' }
 			for field in self:
@@ -128,14 +138,11 @@ def Formula_Update(**kwargs):
 					else:
 						self.formContent[field.name] = field.data
 
-		### For displaying validation errors
-		### from user input
 		def outtakes(self):
 			if self.errors:
 				for error in self.errors.values():
 					flash(*error)		
 
-		### The only custom validator
 		def validate_Zahl(self,Zahl):
 			if self.table == 'homework' or self.table =='lecture':
 				check_exists = database.db_query(
@@ -151,7 +158,8 @@ def Formula_Update(**kwargs):
 						if check_exists else ValidationError(f"{Table} {self.Zahl.data} does not exist.  This is {Table} {self.formContent['id']}.")
 
 
-	### Dynamically create Form_Update attributes
+	### Again, dynamically create Form_Update attributes.
+	### And the values here are tuples.
 	Fach = { 'File', 'Integer', 'String', 'TextArea', 'CKEditor' }
 	for key, value in kwargs.items():
 		if type(value) != tuple:
@@ -168,5 +176,6 @@ def Formula_Update(**kwargs):
 
 
 	return Form_Update(**Form_Update.formContent)
-																			### END CLASS Form_Update
+																		### END CLASS Form_Update
+
 

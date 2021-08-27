@@ -1,4 +1,12 @@
 ### CourseWebApp.database
+"""
+	Module for database operations used all
+	throughout the app. This can be organised
+	into two parts:
+		(1) General database operations
+			for the app
+		(2) Operations specific to user-input
+												"""
 
 import click
 import os
@@ -7,9 +15,13 @@ import sqlite3
 from flask import current_app
 from flask import g
 from flask.cli import with_appcontext
-
 from werkzeug.exceptions import abort
 
+
+########################################
+########################################
+### (1) General Database Operations
+########################################
 
 ### Connect to SQLite database
 def db_open():
@@ -50,6 +62,11 @@ def app_init(app):
 	app.cli.add_command(db_init_command)
 
 
+########################################
+########################################
+### (2) Operations Specific to User-Input
+########################################
+
 ### To sanitise user inputs
 ### for database entry.
 def scrub(string,special=False):
@@ -76,8 +93,11 @@ def scrub_dict(dictionary):
 			scrub(value,special=True)
 		else:
 			pass
+																		### END scrubbing
 
 
+### A lemma for dynamically building
+### SQL query statements
 def db_queryBuilder(
 	operation:str='SELECT', table:str=None, what:str='*', join=False, where:dict=None, order:str=None, limit:str=None, all=False, idd:int=None, dictionary:dict=None):
 
@@ -109,9 +129,12 @@ def db_queryBuilder(
 		set_ = [ f"{key} = :{key}" for key in dictionary.keys() ]
 		set_ = ', '.join(set_)
 		return f"UPDATE {table} SET {set_} WHERE id = '{idd}'"
+																		### END db_queryBuilder()
 
 
-### QUERY (SELECT) entry from database
+### A main function:
+### Used as shortcut for SELECTING from database
+### See the module 'app.models' for one such usage.
 def db_query(table:str, what:str='*', join=False, where:dict=None, order:str=None, limit:str=None, all=False):
 	scrub_dict(locals())
 
@@ -123,5 +146,6 @@ def db_query(table:str, what:str='*', join=False, where:dict=None, order:str=Non
 		return db.execute(query, where).fetchall() if all else db.execute(query, where).fetchone()
 	else:
 		return db.execute(query).fetchall() if all else db.execute(query).fetchone()
+																		### END db_query()
 
 

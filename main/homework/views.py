@@ -1,4 +1,4 @@
-### CourseWebApp.homework
+### CourseWebApp.view.homework
 from flask import Blueprint
 from flask import flash
 from flask import g
@@ -19,15 +19,20 @@ bp = Blueprint('homework', __name__)
 
 
 ### VIEWS/ROUTES
-### Homework index
+### Homework Index
 @bp.route('/homework')
 def homework_index():
 	homeworks_proto = models.Model( table='homework' )
-	homeworks = homeworks_proto.db_select( join=True, order='homework.id', all=True )
+	homeworks = homeworks_proto.db_select(
+					join=True,
+					order='homework.id',
+					all=True )
+
 	return render_template('homework/homework.html', homeworks=homeworks)
+																	### END Homework Index
 
 
-### Create homework
+### Homework: Create
 @bp.route('/homework/create', methods=('GET','POST'))
 @functions.admin_required
 def homework_create():
@@ -38,8 +43,7 @@ def homework_create():
 						title='String',
 						keywords='String',
 						file_homework='File',
-						author_id=g.user['id']
-						)
+						author_id=g.user['id'] )
 
 	if form.validate_on_submit():
 		form.formContent['id'] = form.Zahl.data
@@ -56,9 +60,10 @@ def homework_create():
 		form.outtakes()
 
 	return render_template('homework/create.html', form=form)
+																	### END Homework: Create
 
 
-### Update homework
+### Homework: Update
 @bp.route('/homework/<int:id>/update', methods=('GET', 'POST'))
 @functions.admin_required
 def homework_update(id):
@@ -71,8 +76,7 @@ def homework_update(id):
 					due=('String',homework.due),
 					title=('String',homework.title),
 					keywords=('String',homework.keywords),
-					file_homework=('File',None)
-					)
+					file_homework=('File',None) )
 	form.formContent = homework.__dict__
 
 	if form.validate_on_submit():
@@ -88,9 +92,10 @@ def homework_update(id):
 		form.outtakes()
 
 	return render_template('homework/update.html', homework=homework, form=form)
+																	### END Homework: Update
 
 
-### Delete homework
+### Homework: Delete
 @bp.route('/homework/<int:id>/delete', methods=('POST',))
 @functions.admin_required
 def homework_delete(id):
@@ -100,5 +105,5 @@ def homework_delete(id):
 
 	flash(f"Homework {id} successfully deleted")
 	return redirect(url_for('homework.homework_index'))
-
+																	### END Homework: Delete
 

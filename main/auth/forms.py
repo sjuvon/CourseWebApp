@@ -39,12 +39,6 @@ class Register(FlaskForm):
 
 		database.scrub(self.username.data)
 		query = database.db_query('user', join=False, where={ 'username': self.username.data }, all=False)
-		
-		#query = g.db.execute(f'SELECT * FROM user WHERE username = {self.username.data}').fetchone()
-		'''query = functions.db_select(
-					'user',
-					all=False,
-					username=self.username.data)'''
 
 		if query is not None:
 			raise ValidationError(

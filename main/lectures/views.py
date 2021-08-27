@@ -1,4 +1,4 @@
-### CourseWebApp.lectures
+### CourseWebApp.view.lectures
 from flask import Blueprint
 from flask import flash
 from flask import g
@@ -19,26 +19,29 @@ bp = Blueprint('lectures', __name__)
 
 
 ### VIEWS/ROUTES
-### Lectures index
+### Lectures Index
 @bp.route('/lectures')
 def lectures_index():
 	lectures_proto = models.Model( table='lecture' )
-	lectures = lectures_proto.db_select( join=True, order='lecture.id', all=True )
+	lectures = lectures_proto.db_select(
+					join=True,
+					order='lecture.id',
+					all=True )
 
 	### Gadget for webpage aesthetic.
 	### See BLOCK: CONTENT in lectures.html
 	Max = database.db_query(
 				'lecture',
-				what='MAX(week)'
-				)
+				what='MAX(week)' )
 
 	M = 0 if Max[0] is None else Max[0]
 	###
 
 	return render_template('lectures/lectures.html', lectures=lectures, M=M)
+																	### END Lectures Index
 
 
-### Create lecture
+### Lectures: Create
 @bp.route('/lectures/create', methods=('GET','POST'))
 @functions.admin_required
 def lectures_create():
@@ -50,8 +53,7 @@ def lectures_create():
 					title='String',
 					summary='TextArea',
 					file_lecture='File',
-					author_id=g.user['id']
-					)
+					author_id=g.user['id'] )
 
 	if form.validate_on_submit():
 		form.formContent['id'] = form.Zahl.data
@@ -68,9 +70,10 @@ def lectures_create():
 		form.outtakes()
 
 	return render_template('lectures/create.html', form=form)
+																	### END Lectures: Create
 
 
-### Update lecture
+### Lectures: Update
 @bp.route('/lectures/<int:id>/update', methods=('GET','POST'))
 @functions.admin_required
 def lectures_update(id):
@@ -84,8 +87,7 @@ def lectures_update(id):
 					day=('String',lecture.day),
 					title=('String',lecture.title),
 					summary=('TextArea',lecture.summary),
-					file_lecture=('File',None)
-					)
+					file_lecture=('File',None) )
 	form.formContent = lecture.__dict__
 
 	if form.validate_on_submit():
@@ -101,9 +103,10 @@ def lectures_update(id):
 		form.outtakes()
 
 	return render_template('lectures/update.html', lecture=lecture, form=form)
+																	### END Lectures: Update
 
 
-### Delete lecture
+### Lectures: Delete
 @bp.route('/lectures/<int:id>/delete', methods=('POST',))
 @functions.admin_required
 def lectures_delete(id):
@@ -113,4 +116,6 @@ def lectures_delete(id):
 
 	flash(f"Lecture {id} successfully deleted")
 	return redirect(url_for('lectures.lectures_index'))
+																	### END Lectures: Delete
+
 

@@ -1,4 +1,4 @@
-### CourseWebApp.index
+### CourseWebApp.view.index
 import datetime
 import functools
 import os
@@ -23,19 +23,27 @@ bp = Blueprint('index', __name__)
 
 
 ### VIEWS/ROUTES
+### Main Index
 @bp.route('/')
 def index():
 	welcomes_proto = models.Model( table='welcome' )
-	welcomes = welcomes_proto.db_select( limit='1', all=True )
+	welcomes = welcomes_proto.db_select(
+					limit='1',
+					all=True )
 
 	announcements_proto = models.Model( table='announcement' )
-	announcements = announcements_proto.db_select( join=True, order='created DESC', all=True )
+	announcements = announcements_proto.db_select(
+						join=True,
+						order='created DESC',
+						all=True )
 
 	announcements_size = len(announcements)
 
 	return render_template('index/index.html', welcomes=welcomes, announcements=announcements, announcements_size=announcements_size)
+																	### END Index
 
 
+### Welcome: Create
 @bp.route('/welcome', methods=('GET', 'POST'))
 @functions.admin_required
 def welcome_create():
@@ -43,8 +51,7 @@ def welcome_create():
 
 	form = forms.Formula_Create(
 					table='welcome',
-					greeting='CKEditor'
-					)
+					greeting='CKEditor' )
 
 	if form.validate_on_submit():
 		form.formContent['author_id'] = g.user['id']
@@ -60,8 +67,10 @@ def welcome_create():
 		form.outtakes()
 
 	return render_template('index/welcome.html', welcome=welcome, form=form)
+																	### END Welcome: Create
 
 
+### Welcome: Update
 @bp.route('/welcome/update', methods=('GET', 'POST'))
 @functions.admin_required
 def welcome_update():
@@ -86,6 +95,7 @@ def welcome_update():
 		form.outtakes()
 
 	return render_template('index/update.html', welcome=welcome, form=form)
+																	### END Welcome: Update
 
 
 

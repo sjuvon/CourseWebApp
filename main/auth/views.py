@@ -65,7 +65,11 @@ def load_logged_in_user():
 	if username is None:
 		g.user = None
 	else:
-		g.user = database.db_query( 'user', join=False, where={'username': username}, all=False )
+		g.user = database.db_query(
+					'user',
+					join=False,
+					where={'username':username},
+					all=False )
 
 
 ### Logout

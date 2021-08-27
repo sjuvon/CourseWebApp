@@ -17,13 +17,11 @@ from main import functions
 from main import models
 
 
-### 20 AUG 2021: MAKE A close-all BUTTON FOR ANNOUNCEMENTS
-
 bp = Blueprint('announcements', __name__)
 
 
 ### VIEWS/ROUTES
-### Create announcement
+### Announcement: Create
 @bp.route('/announcements/create', methods=('GET','POST'))
 @functions.admin_required
 def announcements_create():
@@ -31,8 +29,7 @@ def announcements_create():
 					table='announcement',
 					subject='String',
 					body='TextArea',
-					author_id=g.user['id']
-					)
+					author_id=g.user['id'] )
 
 	if form.validate_on_submit():
 		form.formContent['created_text'] = datetime.datetime.now().astimezone().strftime('%d %b %Y at %H:%M %Z')
@@ -49,23 +46,22 @@ def announcements_create():
 		form.outtakes()
 
 	return render_template('announcements/create.html', form=form)
+																	### END Announcement: Create
 
 
-### Update announcement
+### Announcement: Update
 @bp.route('/announcements/<int:id>/update', methods=('GET', 'POST'))
 @functions.admin_required
 def announcements_update(id):
 	### Initialise announcement to update
 	announcement = models.Model( table='announcement' )
 	announcement.db_select(
-						where={ 'id': id }
-						)
+						where={ 'id': id } )
 	### Initialise form
 	form = forms.Formula_Update(
 					table='announcement',
 					subject=('String',announcement.subject),
-					body=('TextArea',announcement.body)
-					)
+					body=('TextArea',announcement.body) )
 	### Hand off database data to form
 	form.formContent = announcement.__dict__
 
@@ -85,9 +81,10 @@ def announcements_update(id):
 		form.outtakes()
 
 	return render_template('announcements/update.html', announcement=announcement, form=form)
+																	### END Announcement: Update
 
 
-### Delete announcement
+### Announcement: Delete
 @bp.route('/announcements/<int:id>/delete', methods=('POST',))
 @functions.admin_required
 def announcements_delete(id):
@@ -97,6 +94,6 @@ def announcements_delete(id):
 
 	flash('Announcement successfully deleted')
 	return redirect(url_for('index'))
-
+																	### END Announcement: Delete
 
 

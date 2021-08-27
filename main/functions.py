@@ -1,4 +1,8 @@
 ### CourseWebApp.functions
+"""
+	Module for general functions used
+	all throughout app.
+									"""
 
 import functools
 import os
@@ -32,11 +36,12 @@ def admin_required(view):
 	return wrapped_view
 
 
-### For uploads
+### For uploads.  This:
 ### 1) Preps files to be uploaded, and
 ### 2) Saves them to appropriate location.
 ### N.B. 2) currently has files saved to local disk.
-###		 That would change if the app ever went into production.
+###		That would change to the server
+###		if the app ever went into production.
 def upload(file,location):
 	if file is None:
 		return
@@ -53,7 +58,7 @@ def upload(file,location):
 	return filename
 
 
-### Don't mind me, just doing my job
+### Don't mind me, just doin' my job
 def debug(dictionary):
 	with open( 'file.py', 'a+' ) as F:
 		F.write( "\n" + repr(dictionary) + "\n" )

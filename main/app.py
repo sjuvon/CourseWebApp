@@ -1,6 +1,6 @@
 ### CourseWebApp.app
 """
-	App module which contains the Application Factory
+	Main app module containing the Application Factory
 														"""
 
 import os
