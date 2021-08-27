@@ -19,7 +19,7 @@ from main import functions
 		Model.attribute	<~~~>	Row entry
 		Model.method()	<~~~>	Database operation
 
-	Data transfers between user and database precisely when
+	Data transfers between front-end and back precisely when
 	Models interact with Forms.  (See 'main.forms' for the
 	Form side of things.)  This ultimately comes down to
 	interfacing the Model's __dict__ with the Form's
