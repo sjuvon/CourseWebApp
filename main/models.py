@@ -17,11 +17,11 @@ from main import functions
 	to the database.  This is done with the following scheme:
 		- a Model instance corresponds to a database table row,
 		- the Model's attributes to the corresponding
-		  table's columns, and
+		  row's entries, and
 		- Model methods to database operations.
 	I.e.,
-		Model instance	<~~~>	Database table row
-		Model.attribute	<~~~>	Table column
+		Model instance	<~~~>	Table row
+		Model.attribute	<~~~>	Row entry
 		Model.method()	<~~~>	Table operation
 
 	With this in mind, we transfer user-data to and from
