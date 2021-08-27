@@ -36,13 +36,13 @@
     {% block header %}{% endblock %}
   </header>
 
+  <div class="flash_flex">
   {% for message in get_flashed_messages() %}
-    <div class="flash_flex">
       <div class="flash">
         {{ message }}
       </div>
-    </div>
   {% endfor %}
+  </div>
 
   {% block content %}{% endblock %}
 </section>

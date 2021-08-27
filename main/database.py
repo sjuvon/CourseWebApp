@@ -60,7 +60,7 @@ def scrub(string,special=False):
 				abort(400)
 		
 	elif not string.isalnum() and '_' not in string:
-				abort(400)
+		abort(400)
 
 def scrub_list(arr):
 	for entry in arr:
