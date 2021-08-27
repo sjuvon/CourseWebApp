@@ -32,7 +32,7 @@ from main import functions
 
 	That's the gist of it.
 
-	N.B. There is one important place where the
+	N.B. There is one key situation where the
 
 		Model	<~~~>	Database
 
