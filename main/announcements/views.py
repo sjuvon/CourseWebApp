@@ -46,7 +46,7 @@ def announcements_create():
 		form.outtakes()
 
 	return render_template('announcements/create.html', form=form)
-																	### END Announcement: Create
+																### END Announcement: Create
 
 
 ### Announcement: Update
@@ -81,7 +81,7 @@ def announcements_update(id):
 		form.outtakes()
 
 	return render_template('announcements/update.html', announcement=announcement, form=form)
-																	### END Announcement: Update
+																### END Announcement: Update
 
 
 ### Announcement: Delete
@@ -94,6 +94,6 @@ def announcements_delete(id):
 
 	flash('Announcement successfully deleted')
 	return redirect(url_for('index'))
-																	### END Announcement: Delete
+																### END Announcement: Delete
 
 

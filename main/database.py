@@ -64,7 +64,7 @@ def app_init(app):
 
 ########################################
 ########################################
-### (2) Operations Specific to User-Input
+### (2) User-Related Operations
 ########################################
 
 ### To sanitise user inputs
@@ -93,7 +93,7 @@ def scrub_dict(dictionary):
 			scrub(value,special=True)
 		else:
 			pass
-																		### END scrubbing
+																	### END scrubbing
 
 
 ### A lemma for dynamically building
@@ -129,12 +129,12 @@ def db_queryBuilder(
 		set_ = [ f"{key} = :{key}" for key in dictionary.keys() ]
 		set_ = ', '.join(set_)
 		return f"UPDATE {table} SET {set_} WHERE id = '{idd}'"
-																		### END db_queryBuilder()
+																	### END db_queryBuilder()
 
 
 ### A main function:
 ### Used as shortcut for SELECTING from database
-### See the module 'app.models' for one such usage.
+### See the module 'main.models' for one such usage.
 def db_query(table:str, what:str='*', join=False, where:dict=None, order:str=None, limit:str=None, all=False):
 	scrub_dict(locals())
 
@@ -146,6 +146,6 @@ def db_query(table:str, what:str='*', join=False, where:dict=None, order:str=Non
 		return db.execute(query, where).fetchall() if all else db.execute(query, where).fetchone()
 	else:
 		return db.execute(query).fetchall() if all else db.execute(query).fetchone()
-																		### END db_query()
+																	### END db_query()
 
 

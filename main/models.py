@@ -10,23 +10,20 @@ from main import functions
 
 
 """
-	The main idea is to use the Model class below as
-	proxy to the database.  This is done with the foll-
-	owing scheme:
+	The Model class acts as proxy to the database as follows:
 		- a Model instance corresponds to a database table row,
-		- the Model's attributes to the corresponding
-		  row's entries, and
+		- the Model's attributes to the row's entries, and
 		- Model methods to database operations.
 	I.e.,
 		Model instance	<~~~>	Table row
 		Model.attribute	<~~~>	Row entry
 		Model.method()	<~~~>	Database operation
 
-	With this in mind, we transfer data between the user
-	and database by having Model classes interact with Form
-	classes.  (See 'main.forms' for the Form side of things.)
-	This is ultimately done by interfacing the Model's
-	__dict__ with the Form's formContent:
+	Data transfers between user and database precisely when
+	Models interact with Forms.  (See 'main.forms' for the
+	Form side of things.)  This ultimately comes down to
+	interfacing the Model's __dict__ with the Form's
+	formContent:
 
 		Model.__dict__ 	<~~~>	Form.formContent
 
@@ -38,10 +35,10 @@ from main import functions
 
 	correspondence returns something interesting: when the
 	Model method 'db_select' is set to 'all=True'.  In this
-	case, the method returns a list of database rows (with each
-	row as a dictionary), instead of being a simple operation
-	on the Model or Database.  This makes it much easier to
-	work with Views.											"""
+	case, the method returns a list of database rows (with dict-
+	ionaries for rows)---cf. methods 'db_insert', 'db_update',
+	'db_delete'.  This makes it much easier to work with Views.											
+																"""
 
 
 ### BEGIN CLASS Model
@@ -77,7 +74,7 @@ class Model():
 				return content
 			else:
 				self.__dict__ = dict(cursor)
-																	### END METHOD db_select
+																### END METHOD db_select
 
 
 	### Method for SQL INSERT operation
@@ -94,7 +91,7 @@ class Model():
 
 		db.execute(query, self.__dict__)
 		db.commit()
-																	### END METHOD db_insert
+																### END METHOD db_insert
 
 
 	### Method for SQL UPDATE operation
@@ -113,7 +110,7 @@ class Model():
 
 		db.execute(query, self.__dict__)
 		db.commit()
-																	### END METHOD db_update
+																### END METHOD db_update
 
 
 	### Method for SQL DELETE operation
@@ -125,8 +122,8 @@ class Model():
 
 		db.execute(f"DELETE FROM {self.table} WHERE id = ?", (id,))
 		db.commit()
-																	### END METHOD db_delete
+																### END METHOD db_delete
 
-																	### END CLASS Model
+																### END CLASS Model
 
 

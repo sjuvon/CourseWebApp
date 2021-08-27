@@ -1,14 +1,14 @@
 ### CourseWebApp.forms
 
 """
-	Module for webform used throughout app
-	E.g.,	See modules:
-			'announcements'
-			'homework'
-			'lectures'
-			'welcome'	(Located in 'main.view')
-	N.B.	The Authentication module 'auth'
-			uses its own special form.
+	Module for creating webforms used through-
+	out app. E.g., See modules:
+			'main.announcements'
+			'main.homework'
+			'main.lectures'
+			'main.welcome'	(Located in 'main.view')
+	N.B. The Authentication module 'main.auth'
+	uses its own special forms.
 											"""
 
 from flask import flash
@@ -28,15 +28,10 @@ from main import models
 
 
 """
-	The general purpose of these Forms: to record
-	user input.  This input will eventually end up in
-	the database, which happens when Forms interact
-	with Model classes.
-
-	The Forms themselves come in two flavors: for
-	creating posts and updating.  They are
-	implemented as classes made dynamically.
-											"""
+	The Forms come in two flavors: for
+	creating and updating posts.  They
+	are both made in class factories:
+										"""
 
 ### BEGIN CLASS Form_Create
 def Formula_Create(*args, **kwargs):
@@ -46,13 +41,12 @@ def Formula_Create(*args, **kwargs):
 		### dict: self.formContent
 		### This is the salient part of the class.
 		### All user-input destined for the database is
-		### recorded here; it will be handed off
-		### to Model classes for database entry...
+		### recorded here in formContent...
 
 		formContent = {}
 
-		### ...and this is the method that writes to
-		### formContent with that final content:
+		### ...and formulateContent is what records
+		### that data:
 
 		def formulateContent(self):
 			Fields = { 'CSRFTokenField', 'SubmitField' }
@@ -64,8 +58,12 @@ def Formula_Create(*args, **kwargs):
 					else:
 						self.formContent[field.name] = field.data
 
-		### For displaying validation errors
-		### in user input
+		### N.B. Not all attributes of Form_Create are
+		### uploaded into the database---e.g., self.table
+		### misses the cut.  Only the data in formContent
+		### makes it through.
+
+		### For displaying validation errors in user input
 		def outtakes(self):
 			if self.errors:
 				for error in self.errors.values():
@@ -87,13 +85,11 @@ def Formula_Create(*args, **kwargs):
 
 
 	### Finally, the portion of the factory that
-	### makes form attributes.
+	### makes the webforms' fields.
 
-	### We've chosen to dynamically make everything:
-	### from form fields to database-related details.
-	### (E.g., 'StringField' and database table names.)
-	### The if/else condition handles these two cases.
-
+	### We organise user-input into two parts:
+	### 	(1) Form fields
+	###		(2) Database-specifics
 	### Note: The kwarg-values are strings.
 
 	Fach = { 'File', 'Integer', 'String', 'TextArea', 'CKEditor' }
@@ -113,7 +109,7 @@ def Formula_Create(*args, **kwargs):
 
 
 	return Form_Create()
-																		### END CLASS Form_Create
+																	### END CLASS Form_Create
 
 
 ### Virtually everything below is the same as above.  The only
@@ -157,8 +153,7 @@ def Formula_Update(**kwargs):
 						if check_exists else ValidationError(f"{Table} {self.Zahl.data} does not exist.  This is {Table} {self.formContent['id']}.")
 
 
-	### Again, dynamically create Form_Update attributes.
-	### And the values here can be tuples.
+	### Again, the values here can be tuples.
 	Fach = { 'File', 'Integer', 'String', 'TextArea', 'CKEditor' }
 	for key, value in kwargs.items():
 		if type(value) != tuple:
@@ -175,6 +170,6 @@ def Formula_Update(**kwargs):
 
 
 	return Form_Update(**Form_Update.formContent)
-																		### END CLASS Form_Update
+																	### END CLASS Form_Update
 
 

@@ -29,7 +29,7 @@ def homework_index():
 					all=True )
 
 	return render_template('homework/homework.html', homeworks=homeworks)
-																	### END Homework Index
+																### END Homework Index
 
 
 ### Homework: Create
@@ -60,7 +60,7 @@ def homework_create():
 		form.outtakes()
 
 	return render_template('homework/create.html', form=form)
-																	### END Homework: Create
+																### END Homework: Create
 
 
 ### Homework: Update
@@ -92,7 +92,7 @@ def homework_update(id):
 		form.outtakes()
 
 	return render_template('homework/update.html', homework=homework, form=form)
-																	### END Homework: Update
+																### END Homework: Update
 
 
 ### Homework: Delete
@@ -105,5 +105,5 @@ def homework_delete(id):
 
 	flash(f"Homework {id} successfully deleted")
 	return redirect(url_for('homework.homework_index'))
-																	### END Homework: Delete
+																### END Homework: Delete
 

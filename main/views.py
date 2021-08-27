@@ -40,7 +40,7 @@ def index():
 	announcements_size = len(announcements)
 
 	return render_template('index/index.html', welcomes=welcomes, announcements=announcements, announcements_size=announcements_size)
-																	### END Index
+																### END Index
 
 
 ### Welcome: Create
@@ -67,7 +67,7 @@ def welcome_create():
 		form.outtakes()
 
 	return render_template('index/welcome.html', welcome=welcome, form=form)
-																	### END Welcome: Create
+																### END Welcome: Create
 
 
 ### Welcome: Update
@@ -95,7 +95,7 @@ def welcome_update():
 		form.outtakes()
 
 	return render_template('index/update.html', welcome=welcome, form=form)
-																	### END Welcome: Update
+																### END Welcome: Update
 
 
 

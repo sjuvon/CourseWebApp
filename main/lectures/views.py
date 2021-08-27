@@ -38,7 +38,7 @@ def lectures_index():
 	###
 
 	return render_template('lectures/lectures.html', lectures=lectures, M=M)
-																	### END Lectures Index
+																### END Lectures Index
 
 
 ### Lectures: Create
@@ -70,7 +70,7 @@ def lectures_create():
 		form.outtakes()
 
 	return render_template('lectures/create.html', form=form)
-																	### END Lectures: Create
+																### END Lectures: Create
 
 
 ### Lectures: Update
@@ -103,7 +103,7 @@ def lectures_update(id):
 		form.outtakes()
 
 	return render_template('lectures/update.html', lecture=lecture, form=form)
-																	### END Lectures: Update
+																### END Lectures: Update
 
 
 ### Lectures: Delete
@@ -116,6 +116,6 @@ def lectures_delete(id):
 
 	flash(f"Lecture {id} successfully deleted")
 	return redirect(url_for('lectures.lectures_index'))
-																	### END Lectures: Delete
+																### END Lectures: Delete
 
 
