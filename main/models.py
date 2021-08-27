@@ -22,8 +22,8 @@ from main import functions
 		Model.attribute	<~~~>	Row entry
 		Model.method()	<~~~>	Database operation
 
-	With this in mind, we transfer user-data to and from
-	the database by having Model classes interact with Form
+	With this in mind, we transfer data between the user
+	and database by having Model classes interact with Form
 	classes.  (See 'main.forms' for the Form side of things.)
 	This is ultimately done by interfacing the Model's
 	__dict__ with the Form's formContent:
