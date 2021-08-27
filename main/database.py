@@ -1,4 +1,4 @@
-### CourseWebApp.functions
+### CourseWebApp.database
 
 import click
 import os

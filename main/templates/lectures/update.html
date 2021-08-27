@@ -12,6 +12,9 @@
             {% if field.name == 'Zahl' %}
                 {{ field.label(text='Assignment No.') }}
                 {{ field }}
+            {% elif field.name == 'day' %}
+                {{ field.label(text='Date') }}
+                {{ field }}
             {% elif field.name == 'file_lecture' %}
                 {{ field.label(text='File') }}
                 {{ field }}

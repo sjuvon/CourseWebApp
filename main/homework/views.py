@@ -22,8 +22,8 @@ bp = Blueprint('homework', __name__)
 ### Homework index
 @bp.route('/homework')
 def homework_index():
-	homeworks = models.Model( table='homework' )
-	homeworks.db_select( join=True, order='homework.id', all=True )
+	homeworks_proto = models.Model( table='homework' )
+	homeworks = homeworks_proto.db_select( join=True, order='homework.id', all=True )
 	return render_template('homework/homework.html', homeworks=homeworks)
 
 
@@ -38,7 +38,6 @@ def homework_create():
 						title='String',
 						keywords='String',
 						file_homework='File',
-						update_='Gotta get rid of this',
 						author_id=g.user['id']
 						)
 

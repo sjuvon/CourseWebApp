@@ -25,7 +25,7 @@ CREATE TABLE announcement (
 	body TEXT NOT NULL,
 	created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	created_text TEXT NOT NULL,
-	updated TEXT,
+	updated_text TEXT,
 	author_id INTEGER NOT NULL,
 	FOREIGN KEY (author_id) REFERENCES user (id) );
 
@@ -37,7 +37,6 @@ CREATE TABLE homework (
 	title TEXT NOT NULL,
 	keywords TEXT NOT NULL,
 	file_homework TEXT,
-	update_ TEXT NOT NULL,
 	created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	author_id INTEGER NOT NULL,
 	FOREIGN KEY (author_id) REFERENCES user (id) );
@@ -51,7 +50,6 @@ CREATE TABLE lecture (
 	title TEXT NOT NULL,
 	summary TEXT NOT NULL,
 	file_lecture TEXT,
-	update_ TEXT NOT NULL,
 	created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	author_id INTEGER NOT NULL,
 	FOREIGN KEY (author_id) REFERENCES user (id) );

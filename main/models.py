@@ -54,24 +54,14 @@ class Model():
 		cursor = database.db_query(self.table, what=what, join=join, where=where, order=order, limit=limit, all=all)
 		if cursor is None:
 			abort(404, f"{getattr(self.table,'capitalize')()} {id} doesn't exist.")
-
-		### The following is possible since 'cursor' is an sqlite3.Row.
-		### See module 'Database' for the row factory configuration.
-		d = [ dict(row) for row in cursor ] if all else dict(cursor)
-
-		if all:
-			for key in d[0].keys():
-				if key not in self.__dict__.keys():
-					setattr(self, f"{key}", [])
-				for entry in d:
-					setattr(
-						self,
-						f"{key}",
-						getattr(self, f"{key}") + [entry[key]] )
 		else:
-			self.__dict__ = dict(cursor)
-
-		self.length = database.db_query( self.table, what='COUNT(*)', join=False, all=False )[0]
+			### The following is possible since 'cursor' is an sqlite3.Row.
+			### See module 'Database' for the row factory configuration.
+			content = [ dict(row) for row in cursor ] if all else dict(cursor)
+			if all:
+				return content
+			else:
+				self.__dict__ = dict(cursor)
 
 
 	### INSERT entry into database

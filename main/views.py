@@ -25,19 +25,20 @@ bp = Blueprint('index', __name__)
 ### VIEWS/ROUTES
 @bp.route('/')
 def index():
-	welcomes = models.Model( table='welcome' )
-	welcomes.db_select( limit='1', all=True )
+	welcomes_proto = models.Model( table='welcome' )
+	welcomes = welcomes_proto.db_select( limit='1', all=True )
 
-	announcements = models.Model( table='announcement' )
-	announcements.db_select( join=True, order='created DESC', all=True )
+	announcements_proto = models.Model( table='announcement' )
+	announcements = announcements_proto.db_select( join=True, order='created DESC', all=True )
 
-	return render_template('index/index.html', welcomes=welcomes, announcements=announcements)
+	announcements_size = len(announcements)
+
+	return render_template('index/index.html', welcomes=welcomes, announcements=announcements, announcements_size=announcements_size)
 
 
 @bp.route('/welcome', methods=('GET', 'POST'))
 @functions.admin_required
 def welcome_create():
-	welcome = models.Model( table='welcome' )
 
 	form = forms.Formula_Create(
 					table='welcome',
@@ -48,6 +49,7 @@ def welcome_create():
 		form.formContent['author_id'] = g.user['id']
 		form.formulateContent()
 
+		welcome = models.Model( table='welcome' )
 		welcome.__dict__ = form.formContent
 		welcome.db_insert()
 
@@ -64,7 +66,7 @@ def welcome_create():
 @functions.admin_required
 def welcome_update():
 	welcome = models.Model( table='welcome' )
-	welcome.db_select( where={ 'id': 1} )
+	welcome.db_select( where={'id': 1} )
 
 	form = forms.Formula_Update( 
 				table='welcome',

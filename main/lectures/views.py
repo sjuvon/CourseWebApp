@@ -22,8 +22,8 @@ bp = Blueprint('lectures', __name__)
 ### Lectures index
 @bp.route('/lectures')
 def lectures_index():
-	lectures = models.Model( table='lecture' )
-	lectures.db_select( join=True, order='lecture.id', all=True )
+	lectures_proto = models.Model( table='lecture' )
+	lectures = lectures_proto.db_select( join=True, order='lecture.id', all=True )
 
 	### Gadget for webpage aesthetic.
 	### See BLOCK: CONTENT in lectures.html
@@ -42,8 +42,6 @@ def lectures_index():
 @bp.route('/lectures/create', methods=('GET','POST'))
 @functions.admin_required
 def lectures_create():
-	lecture = models.Model( table='lecture' )
-
 	form = forms.Formula_Create(
 					table='lecture',
 					week='Integer',
@@ -52,7 +50,6 @@ def lectures_create():
 					title='String',
 					summary='TextArea',
 					file_lecture='File',
-					update_='Ugh, must get rid this',
 					author_id=g.user['id']
 					)
 

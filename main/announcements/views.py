@@ -71,7 +71,7 @@ def announcements_update(id):
 
 	if form.validate_on_submit():
 		### Prepare form for database entry
-		form.formContent['updated'] = datetime.datetime.now().astimezone().strftime('%d %b %Y at %H:%M %Z')
+		form.formContent['updated_text'] = datetime.datetime.now().astimezone().strftime('%d %b %Y at %H:%M %Z')
 		form.formulateContent()
 		
 		### Hand off user input to model for final database update

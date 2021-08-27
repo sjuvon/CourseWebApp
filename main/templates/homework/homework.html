@@ -8,18 +8,18 @@
 {% endblock %}
 
 {% block content %}
-	{% for h in range(homeworks.length) %}
+	{% for homework in homeworks %}
 		<article class="post">
 			<header class="homework_post">
 				<div class="homework_postContainer">
 					<div class="homework_post">
-						<h1>Homework {{ homeworks.id[h] }}: <a href="/gg">{{ homeworks.title[h] }}</a></h1>
-						<span style="color: slategray; font-weight: bold; font-size: 110%;">Due: {{ homeworks.due[h] }}</span>
-						<div class="about">Keywords: {{ homeworks.keywords[h] }}</div>
+						<h1>Homework {{ homework['id'] }}: <a href="/gg">{{ homework['title'] }}</a></h1>
+						<span style="color: slategray; font-weight: bold; font-size: 110%;">Due: {{ homework['due'] }}</span>
+						<div class="about">Keywords: {{ homework['keywords'] }}</div>
 					</div>
 				</div>
 				{% if g.user['username'] == 'admin' %}
-					<a class="action" href="{{ url_for('homework.homework_update', id=homeworks.id[h] ) }}">Edit</a>
+					<a class="action" href="{{ url_for('homework.homework_update', id=homework['id'] ) }}">Edit</a>
 				{% endif %}
 			</header>
 		</article>

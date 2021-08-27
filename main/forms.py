@@ -31,36 +31,38 @@ from main import models
 	Comment on the constructions below
 											"""
 
-
-### BEGIN CLASS Form (Generic base form)
-class Form(FlaskForm):
-	submit = SubmitField()
-	formContent = {}
-
-	### To update form after user input
-	### for eventual database entry
-	def formulateContent(self):
-		Fields = { 'CSRFTokenField', 'SubmitField' }
-		for field in self:
-			if field.type not in Fields:
-				if field.type == 'FileField':
-					filename = functions.upload(field.data, self.table)
-					self.formContent[field.name] = filename
-				else:
-					self.formContent[field.name] = field.data
-
-	### For displaying validation errors
-	### from user input
-	def outtakes(self):
-		if self.errors:
-			for error in self.errors.values():
-				flash(*error)
-																			### END CLASS Form
-
-
 ### BEGIN CLASS Form_Create
 def Formula_Create(*args, **kwargs):
-	class Form_Create(Form):
+	class Form_Create(FlaskForm):
+		submit = SubmitField()
+
+		### dict: self.formContent
+		### This is the salient part of the class.
+		### All user input destined for the database is
+		### recorded here; it will be handed off
+		### to the model for database entry...
+
+		formContent = {}
+
+		### ...and this is the method that writes to
+		### formContent with that final content.
+
+		def formulateContent(self):
+			Fields = { 'CSRFTokenField', 'SubmitField' }
+			for field in self:
+				if field.type not in Fields:
+					if field.type == 'FileField':
+						filename = functions.upload(field.data, self.table)
+						self.formContent[field.name] = filename
+					else:
+						self.formContent[field.name] = field.data
+
+		### For displaying validation errors
+		### from user input
+		def outtakes(self):
+			if self.errors:
+				for error in self.errors.values():
+					flash(*error)
 
 		### The only custom validator
 		def validate_Zahl(self,Zahl):
@@ -76,6 +78,16 @@ def Formula_Create(*args, **kwargs):
 					Table = self.table.capitalize()
 					raise ValidationError(f"{Table} {self.Zahl.data} already exists")
 
+
+	### Dynamically create Form_Create attributes
+	### The previous functions handled the basic attributes and methods
+	### of the class.  The following final piece of code
+	### instantiates the class, done dynamically.
+
+	### There are two basic types of data to instantiate:
+	### 1) User input (i.e., fields)
+	### 2) Database details (i.e., table name, user id)
+	### The if/else condition handles those two cases.
 
 	Fach = { 'File', 'Integer', 'String', 'TextArea', 'CKEditor' }
 	for key, value in kwargs.items():
@@ -99,7 +111,29 @@ def Formula_Create(*args, **kwargs):
 
 ### BEGIN CLASS Form_Update
 def Formula_Update(**kwargs):
-	class Form_Update(Form):
+	class Form_Update(FlaskForm):
+		submit = SubmitField()
+
+		formContent = {}
+
+		### To update form after user input
+		### for eventual database entry
+		def formulateContent(self):
+			Fields = { 'CSRFTokenField', 'SubmitField' }
+			for field in self:
+				if field.type not in Fields:
+					if field.type == 'FileField':
+						filename = functions.upload(field.data, self.table)
+						self.formContent[field.name] = filename
+					else:
+						self.formContent[field.name] = field.data
+
+		### For displaying validation errors
+		### from user input
+		def outtakes(self):
+			if self.errors:
+				for error in self.errors.values():
+					flash(*error)		
 
 		### The only custom validator
 		def validate_Zahl(self,Zahl):
@@ -117,6 +151,7 @@ def Formula_Update(**kwargs):
 						if check_exists else ValidationError(f"{Table} {self.Zahl.data} does not exist.  This is {Table} {self.formContent['id']}.")
 
 
+	### Dynamically create Form_Update attributes
 	Fach = { 'File', 'Integer', 'String', 'TextArea', 'CKEditor' }
 	for key, value in kwargs.items():
 		if type(value) != tuple:
