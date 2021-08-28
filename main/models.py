@@ -62,7 +62,7 @@ class Model():
 		database.scrub_dict(locals())
 
 		### Note: 'cursor' below is an sqlite3.Row.
-		### See 'main.database' for the row factory configuration.
+		### See 'main.database.db_open' for the row factory configuration.
 		cursor = database.db_query(self.table, what=what, join=join, where=where, order=order, limit=limit, all=all)
 
 		if cursor is None:
