@@ -1,30 +1,28 @@
-# CourseWebApp README!
+# CourseWebApp README
 
-Welcome!  After 10+ years of teaching, I've finally made a course website that I would've happily deployed for my students.  Instead of being a basic HTML file, the site comes as a web app written in Python's Flask.  It's based on a course I taught in Spring 2019.  Check it out!
+Welcome to my first project in Flask!  I've taken this opportunity to do something I've wanted for a long time: make a proper web app for the courses I teach.
+
+This project has been a fun first step towards that.  The app is implemented in the Python framework Flask along with its extensions Flask-WTF and Flask-CKEditor; it currently uses SQLite3 for the back-end.  The app's content is based on a course I taught in Spring 2019—check it out!  You can also compare it to the actual HTML page I used back in '19—see: '7142.html'.
 
 Some comments:
 
-  0) The admin account is configured as follows:
+  1) The admin account is configured as follows:
   
         Username: *admin*  
         Password: *password*
         
         The app has been written for now so that 'admin' is always the administrative account.
-
-  1) The app uses the Python framework Flask with extensions Flask-WTF, Flask-CKEditor; it also uses SQLite3 for the back-end.  There's some JavaScript, so don't forget to allow scripts on your browser.
   
-  2) Once you have all of that set up in your virtual environment, fire up the app with the usual Flask commands:
+  2) Once you have your virtual environment set up, fire up the app with the usual Flask commands:
   
           $ export FLASK_APP=run
           $ export FLASK_ENV=development
           $ flask run
           
-  3) A SQLite database has been included for use—see: 'db.sqlite'.  You're welcome to initialise a new database instead with the following command (just before running Flask):
+  3) A SQLite database has been included for use—see: 'db.sqlite'.  You can initialise a new database instead with the following command (just before running Flask):
   
           $ flask db-init
           
-      **However, you should skip this step if you'd like to see the site as originally intended, as it would have looked had the app been available in Spring '19.**
-      
-  4) Speaking of Spring '19, I've included a copy of the original course webpage from that semester ('7142.html').  See for yourself: it's great to finally have a proper app!
+      **However, you should skip this step and use the database provided if you'd like to see the app as originally intended, based on that course from Spring 2019.**
   
-  5) Where do we go from here?  This has been a fun project in Flask, and I'd like to keep the fun going in several directions.  Stay tuned for updates and more exciting projects!
+There's more to do from here.  Stay tuned for updates and more fun projects!
