@@ -10,8 +10,6 @@ Some more comments:
   
         Username: *admin*  
         Password: *password*
-        
-        The app has been written for now so that 'admin' is always the administrative account.
   
   2) Once you have your virtual environment set up, fire up the app with the usual Flask commands:
   
