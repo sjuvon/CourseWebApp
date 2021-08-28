@@ -12,7 +12,7 @@ from main import functions
 """
 	The Model class acts as proxy to the database as follows:
 		- a Model corresponds to a database table row,
-		- the Model's attributes to the row's entries, and
+		- the Model's attributes to the row's entries and
 		- Model methods to database operations.
 	I.e.,
 		Model instance	<~~~>	Table row
@@ -35,8 +35,8 @@ from main import functions
 
 	correspondence returns something interesting: when the
 	Model method 'db_select' is set to 'all=True'.  In this
-	case, the method returns a list of database rows (with dict-
-	ionaries for rows)---cf. methods 'db_insert', 'db_update',
+	case, the method returns a list of database rows (with rows
+	as dictionaries)---cf. methods 'db_insert', 'db_update',
 	'db_delete'.  This makes it much easier to work with Views.											
 																"""
 

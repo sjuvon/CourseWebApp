@@ -96,8 +96,10 @@ def scrub_dict(dictionary):
 																	### END scrubbing
 
 
-### A lemma for dynamically building
-### SQL query statements
+### db_queryBuilder: For dynamically building SQL
+### query statements.  There are unfortunately risks of SQL attacks
+### to this.  The preceding 'scrub' functions address some of
+### the risks; these functions should be used in tandem.
 def db_queryBuilder(
 	operation:str='SELECT', table:str=None, what:str='*', join=False, where:dict=None, order:str=None, limit:str=None, all=False, idd:int=None, dictionary:dict=None):
 
@@ -132,8 +134,8 @@ def db_queryBuilder(
 																	### END db_queryBuilder()
 
 
-### A main function:
-### Used as shortcut for SELECTING from database
+### db_query: A handy function.  Used as a
+### shortcut for SELECTING from database.
 ### See the module 'main.models' for one such usage.
 def db_query(table:str, what:str='*', join=False, where:dict=None, order:str=None, limit:str=None, all=False):
 	scrub_dict(locals())
