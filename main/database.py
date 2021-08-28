@@ -40,7 +40,7 @@ def db_close(e=None):
 		db.close()
 
 
-### Towards initialising the database
+### Schemas
 def db_init():
 	db = db_open()
 	with current_app.open_resource('schema.sql') as f:

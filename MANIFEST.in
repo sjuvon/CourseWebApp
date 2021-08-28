@@ -1,0 +1,6 @@
+recursive-include main/templates
+recursive-include main/static
+include config.py
+include db.sqlite
+include requirements.txt
+global-exclude *.pyc

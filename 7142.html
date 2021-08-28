@@ -1,0 +1,452 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+  <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+	<link rel="icon" href="https://people.math.osu.edu/chung.809/agii.png">
+
+	<style type="text/css">
+	a:hover
+ 		{
+		color: #0000FF;
+		}
+
+	body 
+		{
+		margin: 0; 
+		padding: 0; 
+		text-align: left;
+      <!--background-color: hsla(210,100%,50%,1.0);-->
+ 		}
+    	#container 
+    		{
+      		margin-top: 7%; 
+		margin-bottom: 7%;
+      		margin-left: 16%; 
+		margin-right: 16%;
+      		<!--height: 50%;-->
+      		text-align: left;
+    		}
+
+	img.central
+		{
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		}
+
+	span.BCE
+		{
+		position: relative; /* define context for absolutely positioned CE */
+		}
+
+	span.BCE:hover > .CE
+		{
+		opacity: 1;
+		}
+
+	span.BCE:hover
+		{
+		font-weight:bold;
+		}
+
+	span.CE
+		{
+		position: absolute;
+		top: 100%;
+		left: 100%;
+		z-index: 5;
+		color: black;
+		opacity: 0;
+		transition: .5s;
+		padding: 5px 5px 5px 5px; 
+		border-style:solid;
+		border-color:black;
+		border-width:1px;
+		background: #FFEBCD;
+		font-weight:normal;
+		}
+
+   	</style>
+
+	<title>Homepage of Algebraic Geometry II</title>
+  </head>
+
+  <body>
+	<div id="container">
+	<hr />
+	<br><br>
+	<header> <a><font size="10">Algebraic Geometry II</font></a> </header>
+	<p> <font size="5">Math 7142 <br> Spring 2019</font> </p>
+	<p> <font size="5"><font color="red"><s>Enarson 218</s> <br> <s>MWF 11:30-12:25</s></font>
+	<br><strong>Math Tower 154 <br> MWF 11:25-12:30</strong>
+	</p>
+	<p> <font size="5">Office hours: <br> Math Tower 542 <br> TTh 13-14:30 </p>
+	<br>
+	<hr/>
+	</div>
+
+	<!-- HOMEWORK -->
+	<div id="container">
+	<hr />
+	<header> <a><font size="5">Homework</font></a> </header>
+	<p><a href="https://people.math.osu.edu/chung.809/HW0.pdf">Homework 0</a>
+	<br>
+	<a href="https://people.math.osu.edu/chung.809/HW1.pdf">Homework 1</a>
+	<br>
+	<a href="https://people.math.osu.edu/chung.809/HW2.pdf">Homework 2</a> 
+	<br>
+	<a href="https://people.math.osu.edu/chung.809/HW3.pdf">Homework 3</a>
+	<br>
+	<a href="https://people.math.osu.edu/chung.809/HW4.pdf">Homework 4</a>
+	<br>
+	<a href="https://people.math.osu.edu/chung.809/HW5.pdf">Homework 5</a> (UPDATED)
+	</p>
+	<hr \>
+	</div>
+
+	<!-- CLASS NOTES -->
+	<div id="container">
+	<hr />
+	<header> <a><font size="5">Class notes</font></a> </header>
+	<p>
+		<!-- CLASS 1 -->
+		<span class="BCE">
+		<a>Class 1</a>
+		<span class="CE" style="width:216px;">
+		<font size="4">
+			Presheaves and sheaves on a topological space; examples.
+		</font></span></span> (Mon 01/07) Presheaves, sheaves
+	<br>
+		<!-- CLASS 2 -->
+		<span class="BCE">
+		<a>Class 2</a>
+		<span class="CE" style="width:160px;">
+		<font size="4">
+			Stalks; sheafification.
+		</font></span></span> (Wed 01/09) Stalks, sheafification
+	<br>
+		<!-- CLASS 3 -->
+		<span class="BCE">
+		<a>Class 3</a>
+		<span class="CE" style="width:257px;">
+		<font size="4">
+			Isomorphism of sheaves is a local property; sheaves of abelian groups on \(X\) form an abelian category&mdash;ditto presheaves.
+		</font></span></span> (Fri 01/11) Categories of presheaves, sheaves 
+	<br><br>
+		<!-- CLASS 4 -->
+		<span class="BCE">
+		<a>Class 4</a>
+		<span class="CE" style="width:325px;">
+		<font size="4">
+			Functors on \(\underline{\mathrm{Ab}}(X)\): global sections; taking stalks; skyscraper sheaves; direct and inverse images along continuous maps.
+		</font></span></span> (Mon 01/14) Functors on \( \underline{\mathrm{Ab}}(X) \)
+	<br>
+		<!-- CLASS 5 -->
+		<span class="BCE">
+		<a>Class 5</a>
+		<span class="CE" style="width:216px;">
+		<font size="4">
+			Introducing the affine scheme \(\mathrm{Spec}(R)\); constructing its structure sheaf \(\mathscr{O}_{\mathrm{Spec}(R)}.\)
+		</font></span></span> (Wed 01/16) \( \mathrm{Spec}(R) \)
+	<br>
+		<!-- CLASS 6 -->
+		<span class="BCE">
+		<a>Class 6</a>
+		<span class="CE" style="width:257px;">
+		<font size="4">
+			Completing the construction of the structure sheaf \( \mathscr{O}_{\mathrm{Spec}(R)} \); basic topological properties of \(\mathrm{Spec}(R)\).
+		</font></span></span> (Fri 01/18)  More on \( \mathrm{Spec}(R) \)
+	<br><br>
+		<!-- CLASS 7 -->
+		<span class="BCE">
+		<a>Class 7</a>
+		<span class="CE" style="width:257px;">
+		<font size="4">
+			The topology of \( \mathrm{Spec}(R) \) apropos generic points; closed subschemes of an affine scheme; examples of affine schemes.
+		</font></span></span> (Wed 01/23)  Topology of \( \mathrm{Spec}(R) \), examples
+	<br>
+		<!-- CLASS 8 -->
+		<span class="BCE">
+		<a>Class 8</a>
+		<span class="CE" style="width:257px;">
+		<font size="4">
+			Nilpotents and non-reduced affine schemes;  \(\mathrm{Spec} \ k[t]/(t^2)\) as a closed subscheme of the affine line and plane.
+		</font></span></span> (Fri 01/25) Nilpotents
+	<br><br>
+		<!-- CLASS 9 -->
+		<span class="BCE">
+		<a>Class 9</a>
+		<span class="CE" style="width:400px;">
+		<font size="4">
+			Schemes; distinguished open sets of affine schemes are themselves affine; morphisms of schemes; the fundamental theorem of morphisms of schemes: \( \mathrm{Hom}_{\underline{\mathrm{Sch}}}(X, \mathrm{Spec}(R)) = \mathrm{Hom}_{\underline{\mathrm{CRing}}}(R, \Gamma(X, \mathscr{O}_X)) \).
+		</font></span></span> (Mon 01/28) Schemes
+	<br>
+		<!-- CLASS 10 -->
+		<span class="BCE">
+		<a>Class 10</a>
+		<span class="CE" style="width:300px;">
+		<font size="4">
+			Takeaways from the fundamental theorem of morphisms; schemes over a base \(S\); \(\mathrm{Hom}(\mathrm{Spec}(R), \cdot)\) for a local ring \(R\); projective space \(\mathbb{P}^n_{\mathbb{Z}}\) from glueing affine spaces.
+		</font></span></span> <font color="red"><s>(Wed 01/30)</s></font> (Fri 02/01)  Glueing schemes, and other examples
+	<br><br>
+		<!-- CLASS 11 -->
+		<span class="BCE">
+		<a>Class 11</a>
+		<span class="CE" style="width:330px;">
+		<font size="4">
+			Two more examples of glueing schemes: \( \mathbb{P}^n_{\mathbb{C}} \) as a toric variety, and fiber products \( X \times_S Y \).
+		</font></span></span> (Mon 02/04)  Fiber products
+	<br>
+		<!-- CLASS 12 -->
+		<span class="BCE">
+		<a>Class 12</a>
+		<span class="CE" style="width:330px;">
+		<font size="4">
+			Base change; fibers of morphisms; projection from the parabola done two ways; a family of twisted cubics.
+		</font></span></span> (Wed 02/06)  Families of schemes (Fun with fiber products)
+	<br>
+		<!-- CLASS 13 -->
+		<span class="BCE">
+		<a>Class 13</a>
+		<span class="CE" style="width:316px;">
+		<font size="4">
+			Generic points of a scheme; dimension of a scheme; codimension of closed irreducible subsets; integral if and only if reduced and irreducible; noetherian schemes.
+		</font></span></span> (Fri 02/08)  First properties of schemes
+	<br><br>
+		<!-- CLASS 14 -->
+		<span class="BCE">
+		<a>Class 14</a>
+		<span class="CE" style="width:375px;">
+		<font size="4">
+			Three good properties of morphisms: closed under composition, stable under base change, local on the target; surjective morphisms are stable under base change; starting the big list of morphisms: quasicompact, affine, finite type, finite, integral; the usefulness of being local on the target; some first examples of finite-type morphisms; closed immersions of affine schemes are finite.
+		</font></span></span> (Mon 02/11)  First types of morphism
+	<br>
+		<!-- CLASS 15 -->
+		<span class="BCE">
+		<a>Class 15</a>
+		<span class="CE" style="width:350px;">
+		<font size="4">
+			Open subschemes and immersions; extending sheaves by zero; closed subschemes and immersions; open and closed immersions satisfy the good properties of morphisms; the reduced induced closed subscheme structure.
+		</font></span></span> (Wed 02/13)  Open and closed immersions
+	<br>
+		<!-- CLASS 16 -->
+		<span class="BCE">
+		<a>Class 16</a>
+		<span class="CE" style="width:257px;">
+		<font size="4">
+			The category of varieties over an algebraically closed field \( k \) is equivalent to a full subcategory of schemes over \( k \).
+		</font></span></span> (Fri 02/15)  Varieties are schemes
+	<br><br>
+		<!-- CLASS 17 -->
+		<span class="BCE">
+		<a>Class 17</a>
+		<span class="CE" style="width:257px;">
+		<font size="4">
+			Constructing \( \mathrm{Proj}(S) \) for a graded ring \( S \), following EGA II; \( \mathbb{P}^n_R \) as \( \mathrm{Proj} \ R[x_0,\ldots,x_n] \).
+		</font></span></span> (Mon 02/18)  \( \mathrm{Proj}(S) \)
+	<br>
+		<!-- CLASS 18 -->
+		<span class="BCE">
+		<a>Class 18</a>
+		<span class="CE" style="width:280px;">
+		<font size="4">
+			Locally closed immersions; the graph of a morphism; separated schemes and morphisms; the locus where two morphisms agree.
+		</font></span></span> (Wed 02/20)  Separated schemes and morphisms
+	<br>
+		<!-- CLASS 19 -->
+		<span class="BCE">
+		<a>Class 19</a>
+		<span class="CE" style="width:370px;">
+		<font size="4">
+			Universally closed morphisms; proper morphisms; proper morphisms satisfy the good properties; closed immersions are proper, the affine line is not; \( \mathbb{P}^n_R \) is proper over \( \mathrm{Spec}(R) \), a.k.a. the main theorem of elimination theory; classical examples of the main theorem; criterion for separatedness; Grothendieck's proof of the main theorem.
+		</font></span></span> (Fri 02/22)  Proper morphisms
+	<br><br>
+		<!-- CLASS 20 -->
+		<span class="BCE">
+		<a>Class 20</a>
+		<span class="CE" style="width:330px;">
+		<font size="4">
+			Grothendieck's proof that \( \mathbb{P}^n_R \rightarrow \mathrm{Spec}(R) \) is proper, done right; valuation rings; Spec of a discrete valuation ring; the valuative criterion for noetherian schemes; an application of the valuative criterion: the affine line with doubled origin; the valuative criterion as found in EGA.
+		</font></span></span> (Mon 02/25)  Valuative criteria
+	<br>
+		<!-- CLASS 21 -->
+		<span class="BCE">
+		<a>Class 21</a>
+		<span class="CE" style="width:327px;">
+		<font size="4">
+			\( \mathscr{O}_X \)-modules of a ringed space \( (X, \mathscr{O}_X) \) form an abelian category; the sheaf \( \widetilde{M} \) of an affine scheme \( \mathrm{Spec}(R) \); the assignment \( M \mapsto \widetilde{M} \) defines an exact equivalence between the category of \( R \)-modules and the category of \( \mathscr{O}_X \)-modules of the form \( \widetilde{M} \).
+		</font></span></span> (Wed 02/27)  \( \widetilde{M} \)
+	<br>
+		<!-- CLASS 22 -->
+		<span class="BCE">
+		<a>Class 22</a>
+		<span class="CE" style="width:313px;">
+		<font size="4">
+			Quasicoherent sheaves on a scheme \( X \); quasicoherence is affine-local: it suffices to verify it on <i>some</i> open affine cover of \( X \).
+		</font></span></span> (Fri 03/01)  Quasicoherent sheaves
+	<br><br>
+		<!-- CLASS 23 -->
+		<span class="BCE">
+		<a>Class 23</a>
+		<span class="CE" style="width:350px;">
+		<font size="4">
+			Quasicoherent sheaves form an abelian category \( \mathrm{\mathbf{QCoh}}(X) \); ideal sheaves are precisely the quasicoherent sheaves of ideals; the tensor product \( F \otimes_{\mathscr{O}_X} G\) of quasicoherent sheaves is quasicoherent; tensor powers of quasicoherent sheaves \( T^n(F) \), \( \mathrm{Sym}^n(F) \), \( \bigwedge\nolimits^n(F) \); free and locally free sheaves; quasicoherent sheaves are presented by locally free sheaves; finite properties of quasicoherent sheaves: finite type, finitely presented, coherent; coherent sheaves form an abelian category \( \mathrm{\mathbf{Coh}}(X) \).
+		</font></span></span> (Mon 03/04)  Examples of quasicoherent sheaves
+	<br>
+		<!-- CLASS 24 -->
+		<span class="BCE">
+		<a>Class 24</a>
+		<span class="CE" style="width:320px;">
+		<font size="4">
+			Finite type sheaves, finitely presented sheaves, coherent sheaves; tensor product of coherent sheaves; sheaf hom \( \mathrm{\underline{Hom}}_X(F,G) \); locally free sheaves of finite rank; vector bundles and locally free sheaves.
+		</font></span></span> (Wed 03/06)  Sheaves of modules continued
+	<br>
+		<!-- CLASS 25 -->
+		<span class="BCE">
+		<a>Class 25</a>
+		<span class="CE" style="width:323px;">
+		<font size="4">
+			Pushforward and pullback of quasicoherent sheaves; the quasicoherence of ideal sheaves again; pushforward of coherent sheaf is not necessarily coherent; Grothendieck's proper pushforward of coherent sheaves; a closer look at pullback of quasicoherent sheaves; properties of pullback.
+		</font></span></span> (Fri 03/08)  Functoriality of quasicoherent sheaves
+	<br><br>
+		<!-- CLASS 26 -->
+		<span class="BCE">
+		<a>Class 26</a>
+		<span class="CE" style="width:333px;">
+		<font size="4">
+			Invertible sheaves and \( \mathrm{Pic}(X) \); quasicoherent sheaves on \( \mathrm{Proj}(S) \); projective \( \widetilde{M} \); closed subschemes of Proj via projective twiddle; the invertible sheaf \( \mathscr{O}(1) \).
+		</font></span></span> (Mon 03/18)  \( \mathscr{O}(1) \)
+	<br>
+		<!-- CLASS 27 -->
+		<span class="BCE">
+		<a>Class 27</a>
+		<span class="CE" style="width:337px;">
+		<font size="4">
+			The invertible sheaves \( \mathscr{O}(n) \) and twists \( F(n) \); the operation \( \Gamma_* \); the global sections of \( \mathscr{O}(n) \) over projective space \( \mathbb{P}^n_R \); quasicoherent sheaves on "projective schemes"; closed subschemes of \( \mathbb{P}^n_R \) again; Serre's theorem on globally generated sheaves and twists.
+		</font></span></span> (Wed 03/20)  Doing the twist
+	<br>
+		<!-- CLASS 28 -->
+		<span class="BCE">
+		<a>Class 28</a>
+		<span class="CE" style="width:400px;">
+		<font size="4">
+			Serre's theorem revisited; ample invertible sheaves; globally generated invertible sheaves and morphisms to projective space; Examples: \( \mathrm{Aut}_k(\mathbb{P}^n_k) = \mathrm{PGL}_n(k) \), morphisms \( \mathbb{P}^n \rightarrow \mathbb{P}^N \) determined by the twists \( \mathscr{O}(d) \), projection from a point; base points of an invertible sheaf.
+		</font></span></span> (Fri 03/22)  The functor of \( \mathbb{P}^n \)
+
+	<br><br>
+		<!-- CLASS 29 -->
+		<span class="BCE">
+		<a>Class 29</a>
+		<span class="CE" style="width:300px;">
+		<font size="4">
+			Global \( \mathrm{\textbf{Proj}} \); reality check: global \( \mathrm{\textbf{Proj}} \) recovers the usual Proj over an affine base; projective space over an arbitrary base \( \mathbb{P}^n_X \); projectivisation of a finite type quasicoherent sheaf; projective bundles \( \mathbb{P}(E) \); blow-ups.
+		</font></span></span> (Mon 03/25)  Global \( \mathrm{\textbf{Proj}} \)
+	<br>
+		<!-- CLASS 30 -->
+		<span class="BCE">
+		<a>Class 30</a>
+		<span class="CE" style="width:390px;">
+		<font size="4">
+			Projective morphisms; projective morphisms and the OK life; projective implies proper; finite implies projective; projective schemes over \( \mathrm{Spec}(R) \) as projective morphism; a characterisation of projective morphisms; Hartshorne-projective morphisms; Hartshorne-projective implies projective; projective implies Hartshorne-projective when there is an ample invertible sheaf.
+		</font></span></span> (Wed 03/27)  Projective morphisms
+	<br>
+		<!-- CLASS 31 -->
+		<span class="BCE">
+		<a>Class 31</a>
+		<span class="CE" style="width:370px;">
+		<font size="4">
+			Ample invertible sheaves revisited; very ample invertible sheaves; Hartshorne's definition vs EGA's; very ample invertible sheaves \( \mathscr{O}(d) \) on \( \mathbb{P}^n_k \); the Pluecker embedding \( \mathrm{Gr}(d, V) \hookrightarrow \mathbb{P}(\bigwedge^d V) \); nonsingular quadric surface \( \mathbb{P}^1_k \times \mathbb{P}^1_k \); a few general properties of very ample sheaves; over a noetherian affine base, \( L \) is ample if and only if \( L^{\otimes n} \) is very ample for some \( n > 0 \).
+		</font></span></span> (Fri 03/29)  Very ample invertible sheaves
+	<br><br>
+		<!-- CLASS 32 -->
+		<span class="BCE">
+		<a>Class 32</a>
+		<span class="CE" style="width:365px;">
+		<font size="4">
+			The sheaf of units \( \mathscr{O}_X^* \); transition functions of an invertible sheaf; 1-cocycles and 1-coboundaries; the first Cech cohomology group \( \check{H}^1(X, \mathscr{O}_X^*) \); the transition functions of \( \mathscr{O}_{\mathbb{P}^n}(d) \) over a field; the canonical isomorphism \( \mathrm{Pic}(X) \simeq \check{H}^1(X, \mathscr{O}_X^*) \).
+		</font></span></span> (Mon 04/01)  Transition functions and 1-cocycles
+	<br>
+		<!-- CLASS 33 -->
+		<span class="BCE">
+		<a>Class 33</a>
+		<span class="CE" style="width:370px;">
+		<font size="4">
+			The function field of an integral scheme revisited; the sheaf of total quotient rings; general properties of \( \mathscr{K} \); Cartier divisors; Cartier divisor class group; the invertible sheaf of a Cartier divisor; the Cartier divisor class group embeds into Pic.
+		</font></span></span> (Wed 04/03)  Cartier divisors
+	<br>
+		<!-- CLASS 34 -->
+		<span class="BCE">
+		<a>Class 34</a>
+		<span class="CE" style="width:370px;">
+		<font size="4">
+			Some ring theory; normal and factorial schemes; Weil divisors; the Weil divisor of a rational function; linear equivalence; the Weil divisor class group; Cartier divisors are Weil; Cartier and Weil divisors are the same over factorial schemes; a noetherian domain is factorial if and only if it is integrally closed with trivial class group; Krull's structure theorem for integrally closed domains.
+		</font></span></span> (Fri 04/05)  Weil divisors <font color="red">(UPDATED)</font>
+	<br><br>
+		<!-- CLASS 35 -->
+		<span class="BCE">
+		<a>Class 35</a>
+		<span class="CE" style="width:350px;">
+		<font size="4">
+			Characterising unique factorisation domains; divisor class right-exact sequence; the class and Picard groups of projective space, the smooth quadric, the singular cone.
+		</font></span></span> (Mon 04/08)  First examples of class and Picard groups
+	<br>
+		<!-- CLASS 36 -->
+		<span class="BCE">
+		<a>Class 36</a>
+		<span class="CE" style="width:350px;">
+		<font size="4">
+			Effective Cartier divisors and locally principal closed subschemes; rational sections and Cartier divisors; global sections and effective Cartier divisors.
+		</font></span></span> (Wed 04/10)  Effective Cartier divisors
+	<br>
+		<!-- CLASS 37 -->
+		<span class="BCE">
+		<a>Class 37</a>
+		<span class="CE" style="width:285px;">
+		<font size="4">
+			Effective Cartier divisors bis; effective Cartier divisors of \( \mathbb{P}^n_k \); the degree of a divisor in projective space; the twisted cubic and a complete linear system.
+		</font></span></span> (Fri 04/12)  Fun with divisors
+	<br><br>
+		<!-- CLASS 38 -->
+		<span class="BCE">
+		<a>Class 38</a>
+		<span class="CE" style="width:360px;">
+		<font size="4">
+			Zariski tangent space and regularity; derivations; module of differentials; the differentials of a polynomial ring; the module of differentials by way of the diagonal; fundamental properties of differentials; differentials of a quotient ring; differentials of the coordinate axes; smooth affine schemes over a field; provisional definition of the sheaf of differentials.
+		</font></span></span> (Mon 04/15)  Preliminaries on smoothness
+	<br>
+		<!-- CLASS 39 -->
+		<span class="BCE">
+		<a>Class 39</a>
+		<span class="CE" style="width:350px;">
+		<font size="4">
+			Sheaf of differentials; the relative cotangent and conormal sequences, and the geometric pictures behind them; smooth morphisms; the Jacobian criterion; smooth if and only if the Jacobian criterion is satisfied.
+		</font></span></span> (Wed 04/17)  Smooth
+	<br>
+		<!-- CLASS 40 -->
+		<span class="BCE">
+		<a>Class 40</a>
+		<span class="CE" style="width:390px;">
+		<font size="4">
+			Smoothness and the Jacobian criterion; tangent sheaf; smooth at closed points imply smooth everywhere; Zariski tangent space and fibers of the tangent sheaf; smooth and regular are equivalent over algebraically closed fields; normal, conormal, canonical sheaves and geometric genus; Bertini's theorem.
+		</font></span></span> (Fri 04/19)  Smooth, regular, Bertini
+	<br><br>
+		<!-- CLASS 41 -->
+		<span class="BCE">
+		<a>Class 41</a>
+		<span class="CE" style="width:257px;">
+		<font size="4">
+			Grothendieck's functor of points.
+		</font></span></span> (Mon 04/22)  Vista
+	</p>
+	<hr \>
+	</div>
+
+	<img class="central" src="https://people.math.osu.edu/chung.809/ruledsurface.gif">
+
+  </body>
+</html>
