@@ -1,6 +1,6 @@
 # CourseWebApp README!
 
-Welcome!  After 10+ years of teaching, I've finally made a course website that I would've happily deployed for my students.  Instead of being a basic HTML file, the site comes in the form of a web app written in Python's Flask.  It's based on a course I taught in Spring 2019.  Feel free to check it out!
+Welcome!  After 10+ years of teaching, I've finally made a course website that I would've happily deployed for my students.  Instead of being a basic HTML file, the site comes as a web app written in Python's Flask.  It's based on a course I taught in Spring 2019.  Feel free to check it out!
 
 Some comments:
 
