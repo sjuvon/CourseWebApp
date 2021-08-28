@@ -23,7 +23,7 @@ Some comments:
   
           $ flask db-init
           
-      **You should skip this step if you'd like to see the site as originally intended, as it would have looked had the app been available in Spring '19.**
+      **However, you should skip this step if you'd like to see the site as originally intended, as it would have looked had the app been available in Spring '19.**
       
   4) Speaking of Spring '19, I've included a copy of the original course webpage from that semester ('7142.html').  See for yourself: it's great to finally have a proper app!
   
