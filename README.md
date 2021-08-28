@@ -1,6 +1,6 @@
 # CourseWebApp README!
 
-Welcome!  After 10+ years of teaching at college, I've finally made a course website that I would've happily deployed for my students.  It comes in the form of a web app written in Python's Flask.  The app that's provided is based on a course I taught in Spring 2019.  Feel free to check it out!
+Welcome!  After 10+ years of teaching at college, I've finally made a course website that I would've happily deployed for my students.  It comes in the form of a web app written in Python's Flask.  The app that's provided is based on a course I taught in Spring 2019.  Feel free to check it out!  (I suggest using the database 'db.sqlite' provided.)
 
 Some comments:
 
