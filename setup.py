@@ -11,6 +11,7 @@ setup(
 	install_requires=[
 		'Flask>=2.0',
 		'Flask-WTF>=0.15',
-		'Flask-CKEditor>=0.4'
+		'Flask-CKEditor>=0.4',
+		'SQLite3'
 		]
 	)
