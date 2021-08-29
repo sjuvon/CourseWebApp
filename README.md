@@ -21,6 +21,6 @@ Some relevant info:
   
           $ flask db-init
           
-      **However, you should skip this step and use the database as provided if you'd like to see the app as intended, based on that course from Spring 2019.**
+      **However, you should skip this step and use the database as provided if you'd like to see the app as intended, based on that course from Spring '19.**
   
 Stay tuned for updates and more projects!
