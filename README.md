@@ -11,7 +11,7 @@ Some relevant info:
         Username: *admin*  
         Password: *password*
   
-  2) Once you have your virtual environment set up, fire up the app with the usual Flask commands:
+  2) Once you have your virtual environment set up (Python, Flask, Flask-WTF, Flask-CKEditor), fire up the app with the usual Flask commands:
   
           $ export FLASK_APP=run
           $ export FLASK_ENV=development
