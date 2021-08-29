@@ -29,15 +29,12 @@ from main import functions
 
 	That's the gist of it.
 
-	N.B. There is one key situation where the
-
-		Model	<~~~>	Database
-
-	correspondence returns something interesting: when the
-	Model method 'db_select' is set to 'all=True'.  In this
-	case, the method returns a list of database rows (with rows
-	as dictionaries)---cf. methods 'db_insert', 'db_update',
-	'db_delete'.  This makes it much easier to work with Views.											
+	N.B. All of the Model methods below amount to a database
+	operation behind-the-scenes except for one key situation:
+	when the method 'db_select' is set to 'all=True'.  In this
+	case, the method returns data external to the Model class:
+	an entire database table in the form of a list of dictionar-
+	ies.  Cf. Methods 'db_insert', 'db_update', 'db_delete'.							
 																"""
 
 
