@@ -13,7 +13,7 @@ Some relevant info:
   
   2) Once you have your virtual environment set up (Python, Flask, Flask-WTF, Flask-CKEditor), fire up the app from its top directory with the usual Flask commands:
   
-          $ export FLASK_APP=run
+          $ export FLASK_APP=run.py
           $ export FLASK_ENV=development
           $ flask run
           
