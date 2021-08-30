@@ -47,7 +47,6 @@ def create_app():
 			"My life for Aiur!",
 			"What battle calls?",
 			"Issah'tu!",
-			"I long for combat!",
 			"Gee'hous!",
 			"Gau'gurah!",
 			"Khas I serve!",
@@ -55,14 +54,18 @@ def create_app():
 			"Adun Toridas!",
 			"En Taro Adun!",
 			"Power overwhelming!",
+			"You must construct additional pylons",
 			"SCV good to go, sir!",
 			"Reportin' for duty!",
 			"I can't build it---somethin's in the way!",
 			"Jacked up and good to go!",
 			"Go, go, go!",
 			"Can I take your order?",
-			"Hang on, we're in for some chop!"]
-		return random.choices(quotes)[0]
+			"Destination?",
+			"Input coordinates",
+			"Hang on, we're in for some chop!",
+			"Ab-so-lutely!"]
+		return random.choices(quotes).pop()
 		
 
 	return app
