@@ -45,7 +45,6 @@ def create_app():
 	def hello():
 		quotes = [
 			"My life for Aiur!",
-			"What battle calls?",
 			"Issah'tu!",
 			"Gee'hous!",
 			"Gau'gurah!",
