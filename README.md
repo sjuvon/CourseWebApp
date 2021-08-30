@@ -17,10 +17,10 @@ Some relevant info:
           $ export FLASK_ENV=development
           $ flask run
           
-  3) A SQLite database has been included for use—see: 'db.sqlite'.  You can initialise a new database instead with the following command (just before running Flask):
+  3) A SQLite database has been included for use—see: 'db.sqlite'.  You can always initialise a new database with the following command (just before running Flask):
   
           $ flask db-init
           
-      **However, you should skip this step and use the database as provided if you'd like to see the app as intended, based on that course from Spring '19.**
+      **However, you ought to skip this step and use the database as provided if you'd like to see the app as intended, based on that course from Spring '19.**
   
-Stay tuned for updates and more projects!
+There's more to come—stay tuned for updates and more projects!
