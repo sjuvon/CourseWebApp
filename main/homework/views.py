@@ -23,88 +23,88 @@ bp = Blueprint('homework', __name__)
 @bp.route('/homework')
 @decorators.permission_everyone
 def homework_index():
-	homeworks_proto = models.Model( table='homework' )
-	homeworks = homeworks_proto.db_select(
-					join=True,
-					order='homework.id',
-					all=True )
+    homeworks_proto = models.Model( table='homework' )
+    homeworks = homeworks_proto.db_select(
+                    join=True,
+                    order='homework.id',
+                    all=True )
 
-	return render_template('homework/homework.html', homeworks=homeworks)
-																### END Homework Index
+    return render_template('homework/homework.html', homeworks=homeworks)
+                                                                ### END Homework Index
 
 
 ### Homework: Create
 @bp.route('/homework/create', methods=('GET','POST'))
 @decorators.permission_professor
 def homework_create():
-	form = forms.Formula_Create(
-						table='homework',
-						Zahl='Integer',
-						due='String',
-						title='String',
-						keywords='String',
-						file_homework='File',
-						author_id=g.user['id'] )
+    form = forms.Formula_Create(
+                        table='homework',
+                        Zahl='Integer',
+                        due='String',
+                        title='String',
+                        keywords='String',
+                        file_homework='File',
+                        author_id=g.user['id'] )
 
-	if form.validate_on_submit():
-		form.formContent['id'] = form.Zahl.data
-		form.formulateContent()
+    if form.validate_on_submit():
+        form.formContent['id'] = form.Zahl.data
+        form.formulateContent()
 
-		homework = models.Model( table='homework' )
-		homework.__dict__ = form.formContent
-		homework.db_insert()
+        homework = models.Model( table='homework' )
+        homework.__dict__ = form.formContent
+        homework.db_insert()
 
-		flash(f"Homework {form.Zahl.data} successfully created")
-		return redirect(url_for('homework.homework_index'))
+        flash(f"Homework {form.Zahl.data} successfully created")
+        return redirect(url_for('homework.homework_index'))
 
-	else:
-		form.outtakes()
+    else:
+        form.outtakes()
 
-	return render_template('homework/create.html', form=form)
-																### END Homework: Create
+    return render_template('homework/create.html', form=form)
+                                                                ### END Homework: Create
 
 
 ### Homework: Update
 @bp.route('/homework/<int:id>/update', methods=('GET', 'POST'))
 @decorators.permission_TA
 def homework_update(id):
-	homework = models.Model( table='homework' )
-	homework.db_select( where={'id':id} )
+    homework = models.Model( table='homework' )
+    homework.db_select( where={'id':id} )
 
-	form = forms.Formula_Update(
-					table='homework',
-					Zahl=('Integer',homework.Zahl),
-					due=('String',homework.due),
-					title=('String',homework.title),
-					keywords=('String',homework.keywords),
-					file_homework=('File',None) )
-	form.formContent = homework.__dict__
+    form = forms.Formula_Update(
+                    table='homework',
+                    Zahl=('Integer',homework.Zahl),
+                    due=('String',homework.due),
+                    title=('String',homework.title),
+                    keywords=('String',homework.keywords),
+                    file_homework=('File',None) )
+    form.formContent = homework.__dict__
 
-	if form.validate_on_submit():
-		form.formulateContent()
+    if form.validate_on_submit():
+        form.formulateContent()
 
-		homework.__dict__ = form.formContent
-		homework.db_update(id)
+        homework.__dict__ = form.formContent
+        homework.db_update(id)
 
-		flash(f"Homework {id} successfully updated")
-		return redirect(url_for('homework.homework_index'))
+        flash(f"Homework {id} successfully updated")
+        return redirect(url_for('homework.homework_index'))
 
-	else:
-		form.outtakes()
+    else:
+        form.outtakes()
 
-	return render_template('homework/update.html', homework=homework, form=form)
-																### END Homework: Update
+    return render_template('homework/update.html', homework=homework, form=form)
+                                                                ### END Homework: Update
 
 
 ### Homework: Delete
 @bp.route('/homework/<int:id>/delete', methods=('POST',))
 @decorators.permission_professor
 def homework_delete(id):
-	homework = models.Model( table='homework' )
-	homework.db_select( where={'id':id} )
-	homework.db_delete(id)
+    homework = models.Model( table='homework' )
+    homework.db_select( where={'id':id} )
+    homework.db_delete(id)
 
-	flash(f"Homework {id} successfully deleted")
-	return redirect(url_for('homework.homework_index'))
-																### END Homework: Delete
+    flash(f"Homework {id} successfully deleted")
+    return redirect(url_for('homework.homework_index'))
+                                                                ### END Homework: Delete
 

@@ -23,100 +23,100 @@ bp = Blueprint('lectures', __name__)
 @bp.route('/lectures')
 @decorators.permission_everyone
 def lectures_index():
-	lectures_proto = models.Model( table='lecture' )
-	lectures = lectures_proto.db_select(
-					join=True,
-					order='lecture.id',
-					all=True )
+    lectures_proto = models.Model( table='lecture' )
+    lectures = lectures_proto.db_select(
+                    join=True,
+                    order='lecture.id',
+                    all=True )
 
-	### Gadget for webpage aesthetic.
-	### See BLOCK: CONTENT in lectures.html
-	Max = database.db_query(
-				'lecture',
-				what='MAX(week)' )
+    ### Gadget for webpage aesthetic.
+    ### See BLOCK: CONTENT in lectures.html
+    Max = database.db_query(
+                'lecture',
+                what='MAX(week)' )
 
-	M = 0 if Max[0] is None else Max[0]
-	###
+    M = 0 if Max[0] is None else Max[0]
+    ###
 
-	return render_template('lectures/lectures.html', lectures=lectures, M=M)
-																### END Lectures Index
+    return render_template('lectures/lectures.html', lectures=lectures, M=M)
+                                                                ### END Lectures Index
 
 
 ### Lectures: Create
 @bp.route('/lectures/create', methods=('GET','POST'))
 @decorators.permission_professor
 def lectures_create():
-	form = forms.Formula_Create(
-					table='lecture',
-					week='Integer',
-					Zahl='Integer',
-					day='String',
-					title='String',
-					summary='TextArea',
-					file_lecture='File',
-					author_id=g.user['id'] )
+    form = forms.Formula_Create(
+                    table='lecture',
+                    week='Integer',
+                    Zahl='Integer',
+                    day='String',
+                    title='String',
+                    summary='TextArea',
+                    file_lecture='File',
+                    author_id=g.user['id'] )
 
-	if form.validate_on_submit():
-		form.formContent['id'] = form.Zahl.data
-		form.formulateContent()
+    if form.validate_on_submit():
+        form.formContent['id'] = form.Zahl.data
+        form.formulateContent()
 
-		lecture = models.Model( table='lecture' )
-		lecture.__dict__ = form.formContent
-		lecture.db_insert()
+        lecture = models.Model( table='lecture' )
+        lecture.__dict__ = form.formContent
+        lecture.db_insert()
 
-		flash(f"Lecture {form.Zahl.data} successfully created")
-		return redirect(url_for('lectures.lectures_index'))
+        flash(f"Lecture {form.Zahl.data} successfully created")
+        return redirect(url_for('lectures.lectures_index'))
 
-	else:
-		form.outtakes()
+    else:
+        form.outtakes()
 
-	return render_template('lectures/create.html', form=form)
-																### END Lectures: Create
+    return render_template('lectures/create.html', form=form)
+                                                                ### END Lectures: Create
 
 
 ### Lectures: Update
 @bp.route('/lectures/<int:id>/update', methods=('GET','POST'))
 @decorators.permission_professor
 def lectures_update(id):
-	lecture = models.Model( table='lecture' )
-	lecture.db_select( where={'id':id} )
+    lecture = models.Model( table='lecture' )
+    lecture.db_select( where={'id':id} )
 
-	form = forms.Formula_Update(
-					table='lecture',
-					week=('Integer',lecture.week),
-					Zahl=('Integer',lecture.Zahl),
-					day=('String',lecture.day),
-					title=('String',lecture.title),
-					summary=('TextArea',lecture.summary),
-					file_lecture=('File',None) )
-	form.formContent = lecture.__dict__
+    form = forms.Formula_Update(
+                    table='lecture',
+                    week=('Integer',lecture.week),
+                    Zahl=('Integer',lecture.Zahl),
+                    day=('String',lecture.day),
+                    title=('String',lecture.title),
+                    summary=('TextArea',lecture.summary),
+                    file_lecture=('File',None) )
+    form.formContent = lecture.__dict__
 
-	if form.validate_on_submit():
-		form.formulateContent()
+    if form.validate_on_submit():
+        form.formulateContent()
 
-		lecture.__dict__ = form.formContent
-		lecture.db_update(id)
+        lecture.__dict__ = form.formContent
+        lecture.db_update(id)
 
-		flash(f"Lecture {form.Zahl.data} successfully updated")
-		return redirect(url_for('lectures.lectures_index'))
+        flash(f"Lecture {form.Zahl.data} successfully updated")
+        return redirect(url_for('lectures.lectures_index'))
 
-	else:
-		form.outtakes()
+    else:
+        form.outtakes()
 
-	return render_template('lectures/update.html', lecture=lecture, form=form)
-																### END Lectures: Update
+    return render_template('lectures/update.html', lecture=lecture, form=form)
+                                                                ### END Lectures: Update
 
 
 ### Lectures: Delete
 @bp.route('/lectures/<int:id>/delete', methods=('POST',))
 @decorators.permission_professor
 def lectures_delete(id):
-	lecture = models.Model( table='lecture' )
-	lecture.db_select( where={'id':id} )
-	lecture.db_delete(id)
+    lecture = models.Model( table='lecture' )
+    lecture.db_select( where={'id':id} )
+    lecture.db_delete(id)
 
-	flash(f"Lecture {id} successfully deleted")
-	return redirect(url_for('lectures.lectures_index'))
-																### END Lectures: Delete
+    flash(f"Lecture {id} successfully deleted")
+    return redirect(url_for('lectures.lectures_index'))
+                                                                ### END Lectures: Delete
 
 

@@ -23,60 +23,60 @@ bp = Blueprint('auth', __name__)
 ### Registration
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
-	form = forms.Register()
+    form = forms.Register()
 
-	if form.validate_on_submit():
-		form.formulateContent()
+    if form.validate_on_submit():
+        form.formulateContent()
 
-		register = models.Model( table='user' )
-		register.__dict__ = form.formContent
-		register.db_insert()
+        register = models.Model( table='user' )
+        register.__dict__ = form.formContent
+        register.db_insert()
 
-		flash('Account successfully created')
-		return redirect(url_for('auth.login'))
+        flash('Account successfully created')
+        return redirect(url_for('auth.login'))
 
-	else:
-		form.outtakes()
+    else:
+        form.outtakes()
 
-	return render_template('auth/register.html', form=form)
+    return render_template('auth/register.html', form=form)
 
 
 ### Login
 @bp.route('/login', methods=('GET','POST'))
 def login():
-	form = forms.Login()
+    form = forms.Login()
 
-	if form.validate_on_submit():
-		session.clear()
-		session['username'] = form.username.data
-		flash(f'Logged in.  Welcome, {form.username.data}!')
-		return redirect(url_for('index'))
+    if form.validate_on_submit():
+        session.clear()
+        session['username'] = form.username.data
+        flash(f'Logged in.  Welcome, {form.username.data}!')
+        return redirect(url_for('index'))
 
-	else:
-		form.outtakes()
+    else:
+        form.outtakes()
 
-	return render_template('auth/login.html', form=form)
+    return render_template('auth/login.html', form=form)
 
 
 @bp.before_app_request
 def load_logged_in_user():
-	username = session.get('username')
-	if username is None:
-		g.user = None
-	else:
-		g.user = database.db_query(
-					'user',
-					join=False,
-					where={'username':username},
-					all=False )
+    username = session.get('username')
+    if username is None:
+        g.user = None
+    else:
+        g.user = database.db_query(
+                    'user',
+                    join=False,
+                    where={'username':username},
+                    all=False )
 
 
 ### Logout
 @bp.route('/logout')
 def logout():
-	session.clear()
-	flash('Logged out.  Goodbye!')
-	return redirect(url_for('index'))
+    session.clear()
+    flash('Logged out.  Goodbye!')
+    return redirect(url_for('index'))
 
 
 

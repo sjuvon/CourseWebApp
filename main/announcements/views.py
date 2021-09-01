@@ -25,75 +25,75 @@ bp = Blueprint('announcements', __name__)
 @bp.route('/announcements/create', methods=('GET','POST'))
 @decorators.permission_TA
 def announcements_create():
-	form = forms.Formula_Create(
-					table='announcement',
-					subject='String',
-					body='TextArea',
-					author_id=g.user['id'] )
+    form = forms.Formula_Create(
+                    table='announcement',
+                    subject='String',
+                    body='TextArea',
+                    author_id=g.user['id'] )
 
-	if form.validate_on_submit():
-		form.formContent['created_text'] = datetime.datetime.now().astimezone().strftime('%d %b %Y at %H:%M %Z')
-		form.formulateContent()
+    if form.validate_on_submit():
+        form.formContent['created_text'] = datetime.datetime.now().astimezone().strftime('%d %b %Y at %H:%M %Z')
+        form.formulateContent()
 
-		announcement = models.Model( table='announcement' )
-		announcement.__dict__ = form.formContent
-		announcement.db_insert()
+        announcement = models.Model( table='announcement' )
+        announcement.__dict__ = form.formContent
+        announcement.db_insert()
 
-		flash('Announcement successfully posted')
-		return redirect(url_for('index'))
-	
-	else:
-		form.outtakes()
+        flash('Announcement successfully posted')
+        return redirect(url_for('index'))
+    
+    else:
+        form.outtakes()
 
-	return render_template('announcements/create.html', form=form)
-																### END Announcement: Create
+    return render_template('announcements/create.html', form=form)
+                                                                ### END Announcement: Create
 
 
 ### Announcement: Update
 @bp.route('/announcements/<int:id>/update', methods=('GET', 'POST'))
 @decorators.permission_TA
 def announcements_update(id):
-	### Initialise announcement to update
-	announcement = models.Model( table='announcement' )
-	announcement.db_select(
-						where={ 'id': id } )
-	### Initialise form
-	form = forms.Formula_Update(
-					table='announcement',
-					subject=('String',announcement.subject),
-					body=('TextArea',announcement.body) )
-	### Hand off database data to form
-	form.formContent = announcement.__dict__
+    ### Initialise announcement to update
+    announcement = models.Model( table='announcement' )
+    announcement.db_select(
+                        where={ 'id': id } )
+    ### Initialise form
+    form = forms.Formula_Update(
+                    table='announcement',
+                    subject=('String',announcement.subject),
+                    body=('TextArea',announcement.body) )
+    ### Hand off database data to form
+    form.formContent = announcement.__dict__
 
-	if form.validate_on_submit():
-		### Prepare form for database entry
-		form.formContent['updated_text'] = datetime.datetime.now().astimezone().strftime('%d %b %Y at %H:%M %Z')
-		form.formulateContent()
-		
-		### Hand off user input to model for final database update
-		announcement.__dict__ = form.formContent
-		announcement.db_update(id)
+    if form.validate_on_submit():
+        ### Prepare form for database entry
+        form.formContent['updated_text'] = datetime.datetime.now().astimezone().strftime('%d %b %Y at %H:%M %Z')
+        form.formulateContent()
+        
+        ### Hand off user input to model for final database update
+        announcement.__dict__ = form.formContent
+        announcement.db_update(id)
 
-		flash('Announcement successfully updated')
-		return redirect(url_for('index'))
+        flash('Announcement successfully updated')
+        return redirect(url_for('index'))
 
-	else:
-		form.outtakes()
+    else:
+        form.outtakes()
 
-	return render_template('announcements/update.html', announcement=announcement, form=form)
-																### END Announcement: Update
+    return render_template('announcements/update.html', announcement=announcement, form=form)
+                                                                ### END Announcement: Update
 
 
 ### Announcement: Delete
 @bp.route('/announcements/<int:id>/delete', methods=('POST',))
 @decorators.permission_TA
 def announcements_delete(id):
-	announcement = models.Model( table='announcement' )
-	announcement.db_select( where={ 'id':id } )
-	announcement.db_delete(id)
+    announcement = models.Model( table='announcement' )
+    announcement.db_select( where={ 'id':id } )
+    announcement.db_delete(id)
 
-	flash('Announcement successfully deleted')
-	return redirect(url_for('index'))
-																### END Announcement: Delete
+    flash('Announcement successfully deleted')
+    return redirect(url_for('index'))
+                                                                ### END Announcement: Delete
 
 
