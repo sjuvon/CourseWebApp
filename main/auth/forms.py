@@ -18,8 +18,8 @@ from main import database
 from main import models
 
 
-### Registration form
 class Register(FlaskForm):
+    """ Registration form """
     username = StringField(
         'Username', validators=[DataRequired(), Length(min=3, message='Username must have at least %(min)d characters')])
     password = PasswordField(
@@ -51,6 +51,7 @@ class Register(FlaskForm):
 
 
 class Login(FlaskForm):
+    """ Login form """
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField(label=('Submit'))

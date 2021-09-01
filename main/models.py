@@ -1,13 +1,4 @@
 ### CourseWebApp.models
-import os
-import sqlite3
-
-from flask import g
-from werkzeug.exceptions import abort
-
-from main import database
-
-
 """
     The Model class acts as proxy to the database as follows:
         - a Model corresponds to a database table row,
@@ -34,17 +25,22 @@ from main import database
     case, the method returns data external to the Model class:
     an entire database table in the form of a list of dictionar-
     ies.  Cf. Methods 'db_insert', 'db_update', 'db_delete'.                            
-                                                                """
+"""
+import os
+import sqlite3
+
+from flask import g
+from werkzeug.exceptions import abort
+
+from main import database
 
 
-### BEGIN CLASS Model
 class Model():
 
     __slots__ = ('table', 'length', 'author_id', '__dict__')
 
-    ### Initialise Model instance with database
-    ### entries for attributes.
     def __init__(self, **kwargs):
+        """ Initialise Model instance with database entries for attributes. """
         for key, value in kwargs.items():
             setattr( self, f"{key}", f"{value}" )
 
@@ -52,13 +48,14 @@ class Model():
         return f"Model for database.  Use attribute '__dict__' for data."
 
 
-    ### Method for SQL SELECT operation
     def db_select(self, what:str='*', join=False, where:dict=None, order:str=None, limit:str=None, all=False):
+        """ Method for SQL SELECT operation. """
         database.scrub(self.table)
         database.scrub_dict(locals())
 
-        ### Note: 'cursor' below is an sqlite3.Row.
-        ### See 'main.database.db_open' for the row factory configuration.
+        """ Note: 'cursor' below is an sqlite3.Row.
+        See 'main.database.db_open' for the row factory configuration.
+        """
         cursor = database.db_query(
                     self.table,
                     what=what,
@@ -80,8 +77,8 @@ class Model():
                                                                 ### END METHOD db_select
 
 
-    ### Method for SQL INSERT operation
     def db_insert(self):
+        """ Method for SQL INSERT operation. """
         database.scrub(self.table)
         database.scrub_list(self.__dict__.keys())
 
@@ -97,8 +94,8 @@ class Model():
                                                                 ### END METHOD db_insert
 
 
-    ### Method for SQL UPDATE operation
     def db_update(self, idd:int):
+        """ Method for SQL UPDATE operation. """
         database.scrub(self.table)
         database.scrub(str(idd))
         database.scrub_list(self.__dict__.keys())
@@ -116,8 +113,8 @@ class Model():
                                                                 ### END METHOD db_update
 
 
-    ### Method for SQL DELETE operation
     def db_delete(self, id:int):
+        """ Method for SQL DELETE operation. """
         database.scrub(self.table)
         database.scrub(str(id))
 

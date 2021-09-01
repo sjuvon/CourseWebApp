@@ -18,35 +18,32 @@ from main.auth import decorators
 bp = Blueprint('lectures', __name__)
 
 
-### VIEWS/ROUTES
-### Lectures Index
 @bp.route('/lectures')
 @decorators.permission_everyone
 def lectures_index():
+    """ View for Lectures index """
     lectures_proto = models.Model( table='lecture' )
     lectures = lectures_proto.db_select(
                     join=True,
                     order='lecture.id',
                     all=True )
 
-    ### Gadget for webpage aesthetic.
-    ### See BLOCK: CONTENT in lectures.html
+    """ Gadget for webpage aesthetic. (See BLOCK: CONTENT in lectures.html) """
     Max = database.db_query(
                 'lecture',
                 what='MAX(week)' )
 
     M = 0 if Max[0] is None else Max[0]
-    ###
 
     return render_template('lectures/lectures.html', lectures=lectures, M=M)
                                                                 ### END Lectures Index
 
 
-### Lectures: Create
 @bp.route('/lectures/create', methods=('GET','POST'))
 @decorators.permission_professor
 def lectures_create():
-    form = forms.Formula_Create(
+    """ For creating Lectures """
+    form = forms.formula_create(
                     table='lecture',
                     week='Integer',
                     Zahl='Integer',
@@ -74,14 +71,14 @@ def lectures_create():
                                                                 ### END Lectures: Create
 
 
-### Lectures: Update
 @bp.route('/lectures/<int:id>/update', methods=('GET','POST'))
 @decorators.permission_professor
 def lectures_update(id):
+    """ For updating Lectures """
     lecture = models.Model( table='lecture' )
     lecture.db_select( where={'id':id} )
 
-    form = forms.Formula_Update(
+    form = forms.formula_update(
                     table='lecture',
                     week=('Integer',lecture.week),
                     Zahl=('Integer',lecture.Zahl),
@@ -107,10 +104,10 @@ def lectures_update(id):
                                                                 ### END Lectures: Update
 
 
-### Lectures: Delete
 @bp.route('/lectures/<int:id>/delete', methods=('POST',))
 @decorators.permission_professor
 def lectures_delete(id):
+    """ For deleting Lectures """
     lecture = models.Model( table='lecture' )
     lecture.db_select( where={'id':id} )
     lecture.db_delete(id)

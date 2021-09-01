@@ -19,10 +19,9 @@ from main.auth import forms
 bp = Blueprint('auth', __name__)
 
 
-### VIEWS/ROUTES
-### Registration
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
+    """ View for registering accounts """
     form = forms.Register()
 
     if form.validate_on_submit():
@@ -41,9 +40,9 @@ def register():
     return render_template('auth/register.html', form=form)
 
 
-### Login
 @bp.route('/login', methods=('GET','POST'))
 def login():
+    """ View for login """
     form = forms.Login()
 
     if form.validate_on_submit():
@@ -71,9 +70,9 @@ def load_logged_in_user():
                     all=False )
 
 
-### Logout
 @bp.route('/logout')
 def logout():
+    """ View for logging out """
     session.clear()
     flash('Logged out.  Goodbye!')
     return redirect(url_for('index'))

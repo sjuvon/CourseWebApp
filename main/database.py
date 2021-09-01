@@ -1,12 +1,12 @@
 ### CourseWebApp.database
 """
-    Module for database operations used all
-    throughout the app. This can be organised
-    into two parts:
+    Module for app's main database operations.
+
+    This can be organised into two parts:
         (1) General database operations
             for the app
         (2) Operations specific to user-input
-                                                """
+"""
 
 import click
 import os
@@ -23,8 +23,9 @@ from werkzeug.exceptions import abort
 ### (1) General Database Operations
 ########################################
 
-### Connect to SQLite database
+
 def db_open():
+    """ Open database connection """
     if 'db' not in g:
         g.db = sqlite3.connect(
                     current_app.config['DATABASE'],
@@ -33,31 +34,33 @@ def db_open():
     return g.db
 
 
-### Close database connection
 def db_close(e=None):
+    """ Close database connection """
     db = g.pop('db', None)
     if db is not None:
         db.close()
 
 
-### Schemas
 def db_init():
+    """ Database schema """
     db = db_open()
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
 
-### Initialise database in command-line
 @click.command('db-init')
 @with_appcontext
 def db_init_command():
-    ### N.B. This will clear existing database and establish new one
+    """ Initialise database in command-line.
+
+    N.B. This will clear existing database and establish new one.
+    """
     db_init()
     click.echo('Database in the pipe, five by five!')
 
 
-### For the Application Factory
 def app_init(app):
+    """ For the Application Factory """
     app.teardown_appcontext(db_close)
     app.cli.add_command(db_init_command)
 
@@ -67,9 +70,9 @@ def app_init(app):
 ### (2) User-Related Operations
 ########################################
 
-### To sanitise user inputs
-### for database entry.
+
 def scrub(string,special=False):
+    """ To sanitise user inputs for database entry. """
     if special:
         S = { '"', "'", ";" }
         for x in string:
@@ -96,15 +99,18 @@ def scrub_dict(dictionary):
                                                                     ### END scrubbing
 
 
-### db_queryBuilder: For dynamically building SQL
-### query statements.  There are unfortunately risks of SQL attacks
-### to this.  The preceding 'scrub' functions address some of
-### the risks; these functions should be used in tandem.
 def db_queryBuilder(
     operation:str='SELECT', table:str=None, what:str='*', join=False, where:dict=None, order:str=None, limit:str=None, all=False, idd:int=None, dictionary:dict=None):
+    """ For dynamically building SQL query statements.
 
-    ### The idea here is to construct the SQL statement
-    ### "SELECT {what} FROM {table} JOIN user ON {table}.author_id = user.id WHERE {where} ORDER BY {order} LIMIT {limit}"
+        There are unfortunately risks of SQL attacks
+        to this.  The preceding 'scrub' functions address some of
+        the risks; these functions should be used in tandem.
+    """
+
+    """ The idea here is to construct the SQL statement
+        'SELECT {what} FROM {table} JOIN user ON {table}.author_id = user.id WHERE {where} ORDER BY {order} LIMIT {limit}'
+    """
     if operation == 'SELECT' or operation == 'select':
         query = f"SELECT {what} FROM {table}"
         if join:
@@ -119,14 +125,14 @@ def db_queryBuilder(
             query = query + f" LIMIT {limit}"
         return query
 
-    ### "INSERT INTO {table} {dictionary.keys()} VALUES {values}"
+    """ 'INSERT INTO {table} {dictionary.keys()} VALUES {values}' """
     elif operation == 'INSERT' or operation == 'insert':
         values = [ f":{key}" for key in dictionary.keys() ]
         values = ', '.join(values)
         values = '(' + values + ')'
         return f"INSERT INTO {table} {tuple(dictionary.keys())} VALUES {values}"
 
-    ### "UPDATE {table} SET {set_} WHERE id = '{idd}' "
+    """ 'UPDATE {table} SET {set_} WHERE id = '{idd}'' """
     elif operation == 'UPDATE' or operation == 'update':        
         set_ = [ f"{key} = :{key}" for key in dictionary.keys() ]
         set_ = ', '.join(set_)
@@ -134,10 +140,12 @@ def db_queryBuilder(
                                                                     ### END db_queryBuilder()
 
 
-### db_query: A handy function.  Used as a
-### shortcut for SELECTING from database.
-### See the module 'main.models' for one such usage.
 def db_query(table:str, what:str='*', join=False, where:dict=None, order:str=None, limit:str=None, all=False):
+    """ A handy function.
+
+    Used as a shortcut for SELECTING from database.
+    See the module 'main.models' for one such usage.
+    """
     scrub_dict(locals())
 
     db = db_open()

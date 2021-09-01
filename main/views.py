@@ -22,11 +22,10 @@ from main.auth import decorators
 bp = Blueprint('index', __name__)
 
 
-### VIEWS/ROUTES
-### Main Index
 @bp.route('/')
 @decorators.permission_everyone
 def index():
+    """ For main.index """
     welcomes_proto = models.Model( table='welcome' )
     welcomes = welcomes_proto.db_select(
                     limit='1',
@@ -44,13 +43,13 @@ def index():
                                                                 ### END Index
 
 
-### Welcome: Create
 @bp.route('/welcome', methods=('GET', 'POST'))
 @decorators.permission_professor
 def welcome_create():
+    """ For creating welcome greeting. """
     welcome = models.Model( table='welcome' )
 
-    form = forms.Formula_Create(
+    form = forms.formula_create(
                     table='welcome',
                     greeting='CKEditor' )
 
@@ -71,14 +70,14 @@ def welcome_create():
                                                                 ### END Welcome: Create
 
 
-### Welcome: Update
 @bp.route('/welcome/update', methods=('GET', 'POST'))
 @decorators.permission_professor
 def welcome_update():
+    """ For updating welcome greeting. """
     welcome = models.Model( table='welcome' )
     welcome.db_select( where={'id': 1} )
 
-    form = forms.Formula_Update( 
+    form = forms.formula_update( 
                 table='welcome',
                 greeting=('CKEditor',welcome.greeting) )
     form.formContent = welcome.__dict__

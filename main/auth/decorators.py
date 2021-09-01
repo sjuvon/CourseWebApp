@@ -1,7 +1,5 @@
 ### CourseWebApp.auth.decorators
-"""
-    Module for decorators for role-based views
-                                    """
+""" Module for decorators for role-based views. """
 
 import functools
 
@@ -13,8 +11,8 @@ from werkzeug.exceptions import abort
 from main.auth import views
 
 
-### Decorator for role-based view: Everyone
 def permission_everyone(view):
+    """ Decorator for role-based view: Everyone """
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         ### This view is free for everyone to see
@@ -22,8 +20,8 @@ def permission_everyone(view):
     return wrapped_view
 
 
-### Decorator for role-based view: Student
 def permission_student(view):
+    """ Decorator for role-based view: Student """
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if g.user is None:
@@ -32,8 +30,8 @@ def permission_student(view):
     return wrapped_view
 
 
-### Decorator for role-based view: Grader
 def permission_grader(view):
+    """ Decorator for role-based view: Grader """
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if g.user is None:
@@ -44,8 +42,8 @@ def permission_grader(view):
     return wrapped_view
 
 
-### Decorator for role-based view: Teaching Assistant
 def permission_TA(view):
+    """ Decorator for role-based view: Teaching Assistant """
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if g.user is None:
@@ -56,8 +54,8 @@ def permission_TA(view):
     return wrapped_view
 
 
-### Decorator for role-based view: Professor
 def permission_professor(view):
+    """ Decorator for role-based view: Professor """
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if g.user is None:

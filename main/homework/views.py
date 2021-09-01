@@ -18,11 +18,10 @@ from main.auth import decorators
 bp = Blueprint('homework', __name__)
 
 
-### VIEWS/ROUTES
-### Homework Index
 @bp.route('/homework')
 @decorators.permission_everyone
 def homework_index():
+    """ View for Homework index """
     homeworks_proto = models.Model( table='homework' )
     homeworks = homeworks_proto.db_select(
                     join=True,
@@ -33,11 +32,11 @@ def homework_index():
                                                                 ### END Homework Index
 
 
-### Homework: Create
 @bp.route('/homework/create', methods=('GET','POST'))
 @decorators.permission_professor
 def homework_create():
-    form = forms.Formula_Create(
+    """ For creating Homework """
+    form = forms.formula_create(
                         table='homework',
                         Zahl='Integer',
                         due='String',
@@ -64,14 +63,14 @@ def homework_create():
                                                                 ### END Homework: Create
 
 
-### Homework: Update
 @bp.route('/homework/<int:id>/update', methods=('GET', 'POST'))
 @decorators.permission_TA
 def homework_update(id):
+    """ For updating homework """
     homework = models.Model( table='homework' )
     homework.db_select( where={'id':id} )
 
-    form = forms.Formula_Update(
+    form = forms.formula_update(
                     table='homework',
                     Zahl=('Integer',homework.Zahl),
                     due=('String',homework.due),
@@ -96,10 +95,10 @@ def homework_update(id):
                                                                 ### END Homework: Update
 
 
-### Homework: Delete
 @bp.route('/homework/<int:id>/delete', methods=('POST',))
 @decorators.permission_professor
 def homework_delete(id):
+    """ For deleting homework """
     homework = models.Model( table='homework' )
     homework.db_select( where={'id':id} )
     homework.db_delete(id)

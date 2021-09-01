@@ -1,7 +1,5 @@
 ### CourseWebApp.uploads
-"""
-    Module for uploads function
-                                """
+""" Module for uploads function. """
 
 import functools
 import os
@@ -15,13 +13,16 @@ from werkzeug.utils import secure_filename
 from main.auth import views
 
 
-### For uploads.  This:
-### 1) Preps files to be uploaded, and
-### 2) Saves them to appropriate location.
-### N.B. 2) currently has files saved to local disk.
-###     That would change to the server
-###     if the app ever went into production.
 def upload(file,location):
+    """ For uploads.
+
+    This:
+        1) Preps files to be uploaded, and
+        2) Saves them to appropriate location.
+    N.B. 2) currently has files saved to local disk.
+    That would change to the server
+    if the app ever went into production.
+    """
     if file is None:
         return
         
@@ -37,8 +38,8 @@ def upload(file,location):
     return filename
 
 
-### Don't mind me, just doin' my job
 def debug(dictionary):
+    """ Don't mind me, just doin' my job. """
     with open( 'file.py', 'a+' ) as F:
         F.write( "\n" + repr(dictionary) + "\n" )
 

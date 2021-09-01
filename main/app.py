@@ -1,7 +1,7 @@
 ### CourseWebApp.app
 """
     Main app module containing the Application Factory
-                                                        """
+"""
 
 import os
 import random

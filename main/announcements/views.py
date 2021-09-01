@@ -20,12 +20,11 @@ from main.auth import decorators
 bp = Blueprint('announcements', __name__)
 
 
-### VIEWS/ROUTES
-### Announcement: Create
 @bp.route('/announcements/create', methods=('GET','POST'))
 @decorators.permission_TA
 def announcements_create():
-    form = forms.Formula_Create(
+    """ For creating announcements. """
+    form = forms.formula_create(
                     table='announcement',
                     subject='String',
                     body='TextArea',
@@ -49,28 +48,25 @@ def announcements_create():
                                                                 ### END Announcement: Create
 
 
-### Announcement: Update
 @bp.route('/announcements/<int:id>/update', methods=('GET', 'POST'))
 @decorators.permission_TA
 def announcements_update(id):
-    ### Initialise announcement to update
+    """ For updating announcements. """
     announcement = models.Model( table='announcement' )
     announcement.db_select(
                         where={ 'id': id } )
-    ### Initialise form
-    form = forms.Formula_Update(
+
+    form = forms.formula_update(
                     table='announcement',
                     subject=('String',announcement.subject),
                     body=('TextArea',announcement.body) )
-    ### Hand off database data to form
+    
     form.formContent = announcement.__dict__
 
     if form.validate_on_submit():
-        ### Prepare form for database entry
         form.formContent['updated_text'] = datetime.datetime.now().astimezone().strftime('%d %b %Y at %H:%M %Z')
         form.formulateContent()
         
-        ### Hand off user input to model for final database update
         announcement.__dict__ = form.formContent
         announcement.db_update(id)
 
@@ -84,10 +80,10 @@ def announcements_update(id):
                                                                 ### END Announcement: Update
 
 
-### Announcement: Delete
 @bp.route('/announcements/<int:id>/delete', methods=('POST',))
 @decorators.permission_TA
 def announcements_delete(id):
+    """ For deleting announcements. """
     announcement = models.Model( table='announcement' )
     announcement.db_select( where={ 'id':id } )
     announcement.db_delete(id)
