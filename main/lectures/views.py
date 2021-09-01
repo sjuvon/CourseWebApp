@@ -11,8 +11,8 @@ from werkzeug.exceptions import abort
 
 from main import database
 from main import forms
-from main import functions
 from main import models
+from main.auth import decorators
 
 
 bp = Blueprint('lectures', __name__)
@@ -21,6 +21,7 @@ bp = Blueprint('lectures', __name__)
 ### VIEWS/ROUTES
 ### Lectures Index
 @bp.route('/lectures')
+@decorators.permission_everyone
 def lectures_index():
 	lectures_proto = models.Model( table='lecture' )
 	lectures = lectures_proto.db_select(
@@ -43,7 +44,7 @@ def lectures_index():
 
 ### Lectures: Create
 @bp.route('/lectures/create', methods=('GET','POST'))
-@functions.admin_required
+@decorators.permission_professor
 def lectures_create():
 	form = forms.Formula_Create(
 					table='lecture',
@@ -75,7 +76,7 @@ def lectures_create():
 
 ### Lectures: Update
 @bp.route('/lectures/<int:id>/update', methods=('GET','POST'))
-@functions.admin_required
+@decorators.permission_professor
 def lectures_update(id):
 	lecture = models.Model( table='lecture' )
 	lecture.db_select( where={'id':id} )
@@ -108,7 +109,7 @@ def lectures_update(id):
 
 ### Lectures: Delete
 @bp.route('/lectures/<int:id>/delete', methods=('POST',))
-@functions.admin_required
+@decorators.permission_professor
 def lectures_delete(id):
 	lecture = models.Model( table='lecture' )
 	lecture.db_select( where={'id':id} )

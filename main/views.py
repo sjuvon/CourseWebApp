@@ -15,8 +15,8 @@ from werkzeug.exceptions import abort
 
 from main import database
 from main import forms
-from main import functions
 from main import models
+from main.auth import decorators
 
 
 bp = Blueprint('index', __name__)
@@ -25,6 +25,7 @@ bp = Blueprint('index', __name__)
 ### VIEWS/ROUTES
 ### Main Index
 @bp.route('/')
+@decorators.permission_everyone
 def index():
 	welcomes_proto = models.Model( table='welcome' )
 	welcomes = welcomes_proto.db_select(
@@ -45,7 +46,7 @@ def index():
 
 ### Welcome: Create
 @bp.route('/welcome', methods=('GET', 'POST'))
-@functions.admin_required
+@decorators.permission_professor
 def welcome_create():
 	welcome = models.Model( table='welcome' )
 
@@ -72,7 +73,7 @@ def welcome_create():
 
 ### Welcome: Update
 @bp.route('/welcome/update', methods=('GET', 'POST'))
-@functions.admin_required
+@decorators.permission_professor
 def welcome_update():
 	welcome = models.Model( table='welcome' )
 	welcome.db_select( where={'id': 1} )

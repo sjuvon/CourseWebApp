@@ -11,8 +11,8 @@ from werkzeug.exceptions import abort
 
 from main import database
 from main import forms
-from main import functions
 from main import models
+from main.auth import decorators
 
 
 bp = Blueprint('homework', __name__)
@@ -21,6 +21,7 @@ bp = Blueprint('homework', __name__)
 ### VIEWS/ROUTES
 ### Homework Index
 @bp.route('/homework')
+@decorators.permission_everyone
 def homework_index():
 	homeworks_proto = models.Model( table='homework' )
 	homeworks = homeworks_proto.db_select(
@@ -34,7 +35,7 @@ def homework_index():
 
 ### Homework: Create
 @bp.route('/homework/create', methods=('GET','POST'))
-@functions.admin_required
+@decorators.permission_professor
 def homework_create():
 	form = forms.Formula_Create(
 						table='homework',
@@ -65,7 +66,7 @@ def homework_create():
 
 ### Homework: Update
 @bp.route('/homework/<int:id>/update', methods=('GET', 'POST'))
-@functions.admin_required
+@decorators.permission_TA
 def homework_update(id):
 	homework = models.Model( table='homework' )
 	homework.db_select( where={'id':id} )
@@ -97,7 +98,7 @@ def homework_update(id):
 
 ### Homework: Delete
 @bp.route('/homework/<int:id>/delete', methods=('POST',))
-@functions.admin_required
+@decorators.permission_professor
 def homework_delete(id):
 	homework = models.Model( table='homework' )
 	homework.db_select( where={'id':id} )

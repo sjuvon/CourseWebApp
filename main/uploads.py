@@ -1,8 +1,7 @@
-### CourseWebApp.functions
+### CourseWebApp.uploads
 """
-	Module for general functions used
-	all throughout app.
-									"""
+	Module for uploads function
+								"""
 
 import functools
 import os
@@ -14,26 +13,6 @@ from werkzeug.exceptions import abort
 from werkzeug.utils import secure_filename
 
 from main.auth import views
-
-
-### Login requirement decorator
-def login_required(view):
-	@functools.wraps(view)
-	def wrapped_view(**kwargs):
-		if g.user is None:
-			return redirect(url_for('auth.login'))
-		return view(**kwargs)
-	return wrapped_view
-	
-
-### Admin requirement decorator
-def admin_required(view):
-	@functools.wraps(view)
-	def wrapped_view(**kwargs):
-		if g.user is None or g.user['username'] != 'admin':			
-			abort(403)
-		return view(**kwargs)
-	return wrapped_view
 
 
 ### For uploads.  This:

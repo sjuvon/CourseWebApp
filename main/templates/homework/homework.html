@@ -2,7 +2,7 @@
 
 {% block header %}
 	<h1>{% block title %}Homework{% endblock %}</h1>
-	{% if g.user['username'] == 'admin' %}
+	{% if g.user['role_id'] == 4 %}
 		<a class="action" href="{{ url_for('homework.homework_create') }}">New Assignment</a>
 	{% endif %}
 {% endblock %}
@@ -18,7 +18,7 @@
 						<div class="about">Keywords: {{ homework['keywords'] }}</div>
 					</div>
 				</div>
-				{% if g.user['username'] == 'admin' %}
+				{% if g.user and g.user['role_id'] > 2 %}
 					<a class="action" href="{{ url_for('homework.homework_update', id=homework['id'] ) }}">Edit</a>
 				{% endif %}
 			</header>

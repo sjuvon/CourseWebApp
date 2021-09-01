@@ -12,7 +12,6 @@ from flask_ckeditor import CKEditor
 from config import Config
 
 from main import database
-from main import functions
 from main.announcements.views import bp as bp_announcements
 from main.auth.views import bp as bp_auth
 from main.homework.views import bp as bp_homework

@@ -15,7 +15,6 @@ from wtforms.validators import Length
 from wtforms.validators import ValidationError
 
 from main import database
-from main import functions
 from main import models
 
 

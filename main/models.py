@@ -6,7 +6,6 @@ from flask import g
 from werkzeug.exceptions import abort
 
 from main import database
-from main import functions
 
 
 """

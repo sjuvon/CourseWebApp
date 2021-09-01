@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS welcome;
 DROP TABLE IF EXISTS announcement;
 DROP TABLE IF EXISTS homework;
@@ -8,7 +9,21 @@ DROP TABLE IF EXISTS lecture;
 CREATE TABLE user (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	username TEXT UNIQUE NOT NULL,
-	password TEXT NOT NULL );
+	password TEXT NOT NULL,
+	role_id INTEGER NOT NULL DEFAULT 1 );
+
+
+CREATE TABLE role (
+	id INTEGER PRIMARY KEY,
+	role_name TEXT UNIQUE NOT NULL DEFAULT 'student',
+	CHECK (id >= 1 AND id <= 4),
+	FOREIGN KEY (id) REFERENCES user (role_id) );
+		/*
+			'student'	<~~~>	1
+			'grader'	<~~~>	2
+			'TA'		<~~~>	3
+			'professor'	<~~~>	4
+		*/
 
 
 CREATE TABLE welcome (

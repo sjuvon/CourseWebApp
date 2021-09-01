@@ -13,8 +13,8 @@ from werkzeug.exceptions import abort
 
 from main import database
 from main import forms
-from main import functions
 from main import models
+from main.auth import decorators
 
 
 bp = Blueprint('announcements', __name__)
@@ -23,7 +23,7 @@ bp = Blueprint('announcements', __name__)
 ### VIEWS/ROUTES
 ### Announcement: Create
 @bp.route('/announcements/create', methods=('GET','POST'))
-@functions.admin_required
+@decorators.permission_TA
 def announcements_create():
 	form = forms.Formula_Create(
 					table='announcement',
@@ -51,7 +51,7 @@ def announcements_create():
 
 ### Announcement: Update
 @bp.route('/announcements/<int:id>/update', methods=('GET', 'POST'))
-@functions.admin_required
+@decorators.permission_TA
 def announcements_update(id):
 	### Initialise announcement to update
 	announcement = models.Model( table='announcement' )
@@ -86,7 +86,7 @@ def announcements_update(id):
 
 ### Announcement: Delete
 @bp.route('/announcements/<int:id>/delete', methods=('POST',))
-@functions.admin_required
+@decorators.permission_TA
 def announcements_delete(id):
 	announcement = models.Model( table='announcement' )
 	announcement.db_select( where={ 'id':id } )

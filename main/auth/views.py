@@ -12,7 +12,6 @@ from flask import url_for
 from werkzeug.exceptions import abort
 
 from main import database
-from main import functions
 from main import models
 from main.auth import forms
 

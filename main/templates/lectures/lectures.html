@@ -2,7 +2,7 @@
 
 {% block header %}
 	<h1>{% block title %}Lectures{% endblock %}</h1>
-	{% if g.user['username'] == 'admin' %}
+	{% if g.user['role_id'] == 4 %}
 		<a class="action" href="{{ url_for('lectures.lectures_create') }}">New Lecture</a>
 	{% endif %}
 {% endblock %}
@@ -17,7 +17,7 @@
 							<h1><span class="BCE">Lecture {{ lecture['id'] }}: <a href="/gg">{{ lecture['title'] }}</a><span class="CE">{{ lecture['summary'] }}</span></span></h1>
 							<div class="about">{{ lecture['day'] }}</div>
 						</div>
-						{% if g.user['username'] == 'admin' %}
+						{% if g.user['role_id'] == 4 %}
 							<a class="action" href="{{ url_for('lectures.lectures_update', id=lecture['id'] ) }}">Edit</a>
 						{% endif %}
 					</header>

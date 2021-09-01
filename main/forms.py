@@ -23,7 +23,7 @@ from wtforms import TextAreaField
 from wtforms.validators import ValidationError
 
 from main import database
-from main import functions
+from main import uploads
 from main import models
 
 
@@ -53,7 +53,7 @@ def Formula_Create(*args, **kwargs):
 			for field in self:
 				if field.type not in Fields:
 					if field.type == 'FileField':
-						filename = functions.upload(field.data, self.table)
+						filename = uploads.upload(field.data, self.table)
 						self.formContent[field.name] = filename
 					else:
 						self.formContent[field.name] = field.data
@@ -128,7 +128,7 @@ def Formula_Update(**kwargs):
 			for field in self:
 				if field.type not in Fields:
 					if field.type == 'FileField':
-						filename = functions.upload(field.data, self.table)
+						filename = uploads.upload(field.data, self.table)
 						self.formContent[field.name] = filename
 					else:
 						self.formContent[field.name] = field.data
