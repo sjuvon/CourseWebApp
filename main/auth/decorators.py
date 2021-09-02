@@ -1,5 +1,16 @@
 ### CourseWebApp.auth.decorators
-""" Module for decorators for role-based views. """
+""" Module for setting role-based Views.
+
+    Upon registration, every user is assigned one of four
+    roles and role IDs:
+          'Student'  <~~~>  1 (Default)
+           'Grader'  <~~~>  2
+               'TA'  <~~~>  3
+        'Professor'  <~~~>  4
+    Users then have access to a particular View based on
+    their role. The hierarchy is set so that every role
+    has the permissions of its predecessor.
+"""
 
 import functools
 
@@ -15,7 +26,7 @@ def permission_everyone(view):
     """ Decorator for role-based view: Everyone """
     @functools.wraps(view)
     def wrapped_view(**kwargs):
-        ### This view is free for everyone to see
+        ### This View is free for everyone to see.
         return view(**kwargs)
     return wrapped_view
 
