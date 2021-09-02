@@ -108,9 +108,8 @@ def db_queryBuilder(
         the risks; these functions should be used in tandem.
     """
 
-    """ The idea here is to construct the SQL statement
-        'SELECT {what} FROM {table} JOIN user ON {table}.author_id = user.id WHERE {where} ORDER BY {order} LIMIT {limit}'
-    """
+    ### The idea here is to construct the SQL statement
+    ### 'SELECT {what} FROM {table} JOIN user ON {table}.author_id = user.id WHERE {where} ORDER BY {order} LIMIT {limit}'
     if operation == 'SELECT' or operation == 'select':
         query = f"SELECT {what} FROM {table}"
         if join:
@@ -125,14 +124,14 @@ def db_queryBuilder(
             query = query + f" LIMIT {limit}"
         return query
 
-    """ 'INSERT INTO {table} {dictionary.keys()} VALUES {values}' """
+    ### 'INSERT INTO {table} {dictionary.keys()} VALUES {values}'
     elif operation == 'INSERT' or operation == 'insert':
         values = [ f":{key}" for key in dictionary.keys() ]
         values = ', '.join(values)
         values = '(' + values + ')'
         return f"INSERT INTO {table} {tuple(dictionary.keys())} VALUES {values}"
 
-    """ 'UPDATE {table} SET {set_} WHERE id = '{idd}'' """
+    ### 'UPDATE {table} SET {set_} WHERE id = '{idd}''
     elif operation == 'UPDATE' or operation == 'update':        
         set_ = [ f"{key} = :{key}" for key in dictionary.keys() ]
         set_ = ', '.join(set_)

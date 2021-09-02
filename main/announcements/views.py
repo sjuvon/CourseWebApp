@@ -23,7 +23,7 @@ bp = Blueprint('announcements', __name__)
 @bp.route('/announcements/create', methods=('GET','POST'))
 @decorators.permission_TA
 def announcements_create():
-    """ For creating announcements. """
+    """ View creating Announcements. """
     form = forms.formula_create(
                     table='announcement',
                     subject='String',
@@ -51,7 +51,7 @@ def announcements_create():
 @bp.route('/announcements/<int:id>/update', methods=('GET', 'POST'))
 @decorators.permission_TA
 def announcements_update(id):
-    """ For updating announcements. """
+    """ View for updating Announcements. """
     announcement = models.Model( table='announcement' )
     announcement.db_select(
                         where={ 'id': id } )
@@ -83,7 +83,7 @@ def announcements_update(id):
 @bp.route('/announcements/<int:id>/delete', methods=('POST',))
 @decorators.permission_TA
 def announcements_delete(id):
-    """ For deleting announcements. """
+    """ View for deleting Announcements. """
     announcement = models.Model( table='announcement' )
     announcement.db_select( where={ 'id':id } )
     announcement.db_delete(id)

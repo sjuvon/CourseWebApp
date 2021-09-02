@@ -28,7 +28,8 @@ def lectures_index():
                     order='lecture.id',
                     all=True )
 
-    """ Gadget for webpage aesthetic. (See BLOCK: CONTENT in lectures.html) """
+    ### Gadget for webpage aesthetic.
+    ### See BLOCK: CONTENT in lectures.html
     Max = database.db_query(
                 'lecture',
                 what='MAX(week)' )
@@ -42,7 +43,7 @@ def lectures_index():
 @bp.route('/lectures/create', methods=('GET','POST'))
 @decorators.permission_professor
 def lectures_create():
-    """ For creating Lectures """
+    """ View for creating Lectures """
     form = forms.formula_create(
                     table='lecture',
                     week='Integer',
@@ -74,7 +75,7 @@ def lectures_create():
 @bp.route('/lectures/<int:id>/update', methods=('GET','POST'))
 @decorators.permission_professor
 def lectures_update(id):
-    """ For updating Lectures """
+    """ View for updating Lectures """
     lecture = models.Model( table='lecture' )
     lecture.db_select( where={'id':id} )
 
@@ -107,7 +108,7 @@ def lectures_update(id):
 @bp.route('/lectures/<int:id>/delete', methods=('POST',))
 @decorators.permission_professor
 def lectures_delete(id):
-    """ For deleting Lectures """
+    """ View for deleting Lectures """
     lecture = models.Model( table='lecture' )
     lecture.db_select( where={'id':id} )
     lecture.db_delete(id)

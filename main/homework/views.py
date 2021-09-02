@@ -35,7 +35,7 @@ def homework_index():
 @bp.route('/homework/create', methods=('GET','POST'))
 @decorators.permission_professor
 def homework_create():
-    """ For creating Homework """
+    """ View for creating Homework """
     form = forms.formula_create(
                         table='homework',
                         Zahl='Integer',
@@ -66,7 +66,7 @@ def homework_create():
 @bp.route('/homework/<int:id>/update', methods=('GET', 'POST'))
 @decorators.permission_TA
 def homework_update(id):
-    """ For updating homework """
+    """ View for updating Homework """
     homework = models.Model( table='homework' )
     homework.db_select( where={'id':id} )
 
@@ -98,7 +98,7 @@ def homework_update(id):
 @bp.route('/homework/<int:id>/delete', methods=('POST',))
 @decorators.permission_professor
 def homework_delete(id):
-    """ For deleting homework """
+    """ View for deleting Homework """
     homework = models.Model( table='homework' )
     homework.db_select( where={'id':id} )
     homework.db_delete(id)

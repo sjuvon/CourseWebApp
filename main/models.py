@@ -1,4 +1,13 @@
 ### CourseWebApp.models
+import os
+import sqlite3
+
+from flask import g
+from werkzeug.exceptions import abort
+
+from main import database
+
+
 """
     The Model class acts as proxy to the database as follows:
         - a Model corresponds to a database table row,
@@ -26,14 +35,6 @@
     an entire database table in the form of a list of dictionar-
     ies.  Cf. Methods 'db_insert', 'db_update', 'db_delete'.                            
 """
-import os
-import sqlite3
-
-from flask import g
-from werkzeug.exceptions import abort
-
-from main import database
-
 
 class Model():
 
@@ -53,9 +54,8 @@ class Model():
         database.scrub(self.table)
         database.scrub_dict(locals())
 
-        """ Note: 'cursor' below is an sqlite3.Row.
-        See 'main.database.db_open' for the row factory configuration.
-        """
+        ### Note: 'cursor' below is an sqlite3.Row.
+        ### See 'main.database.db_open' for the row factory configuration.
         cursor = database.db_query(
                     self.table,
                     what=what,

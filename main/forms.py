@@ -33,14 +33,13 @@ def formula_create(*args, **kwargs):
     class Form_Create(FlaskForm):
         submit = SubmitField()
 
-        """ dict: self.formContent
-        This is the salient part of the class.
-        All user-input destined for the database is
-        recorded here in formContent...
-        """
+        ### dict: self.formContent
+        ### This is the salient part of the class.
+        ### All user-input destined for the database is
+        ### recorded here in formContent...
         formContent = {}
 
-        """ ...and formulateContent is what records that data: """
+        ### ...and formulateContent is what records that data:
         def formulateContent(self):
             Fields = { 'CSRFTokenField', 'SubmitField' }
             for field in self:
@@ -51,11 +50,10 @@ def formula_create(*args, **kwargs):
                     else:
                         self.formContent[field.name] = field.data
 
-        """ N.B. Not all attributes of Form_Create are
-        uploaded into the database---e.g., self.table
-        misses the cut.  Only the data in formContent
-        makes it through.
-        """
+        ### N.B. Not all attributes of Form_Create are
+        ### uploaded into the database---e.g., self.table
+        ### misses the cut.  Only the data in formContent
+        ### makes it through.
 
         def outtakes(self):
         """ For displaying validation errors in user input. """
@@ -81,13 +79,12 @@ def formula_create(*args, **kwargs):
                     raise ValidationError(f"{Table} {self.Zahl.data} already exists")
 
 
-    """ Finally, the portion of the factory that
-    makes the webforms' fields. We organise user-input
-    into two parts:
-         (1) Form fields
-         (2) Database-specifics
-    Note: The kwarg-values are strings.
-    """
+    ### Finally, the portion of the factory that
+    ### makes the webforms' fields. We organise user-input
+    ### into two parts:
+    ###     (1) Form fields
+    ###     (2) Database-specifics
+    ### Note: The kwarg-values are strings.
     Fach = { 'File', 'Integer', 'String', 'TextArea', 'CKEditor' }
     for key, value in kwargs.items():
         if value not in Fach:
@@ -149,7 +146,7 @@ def formula_update(**kwargs):
                         if check_exists else ValidationError(f"{Table} {self.Zahl.data} does not exist.  This is {Table} {self.formContent['id']}.")
 
 
-    """ Again, the values here can be tuples: """
+    ### Again, the values here can be tuples:
     Fach = { 'File', 'Integer', 'String', 'TextArea', 'CKEditor' }
     for key, value in kwargs.items():
         if type(value) != tuple:

@@ -25,7 +25,7 @@ bp = Blueprint('index', __name__)
 @bp.route('/')
 @decorators.permission_everyone
 def index():
-    """ For main.index """
+    """ View for main.index """
     welcomes_proto = models.Model( table='welcome' )
     welcomes = welcomes_proto.db_select(
                     limit='1',
@@ -46,7 +46,7 @@ def index():
 @bp.route('/welcome', methods=('GET', 'POST'))
 @decorators.permission_professor
 def welcome_create():
-    """ For creating welcome greeting. """
+    """ View for creating Welcome greeting. """
     welcome = models.Model( table='welcome' )
 
     form = forms.formula_create(
@@ -73,7 +73,7 @@ def welcome_create():
 @bp.route('/welcome/update', methods=('GET', 'POST'))
 @decorators.permission_professor
 def welcome_update():
-    """ For updating welcome greeting. """
+    """ For updating Welcome greeting. """
     welcome = models.Model( table='welcome' )
     welcome.db_select( where={'id': 1} )
 

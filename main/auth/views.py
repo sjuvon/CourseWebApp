@@ -42,7 +42,7 @@ def register():
 
 @bp.route('/login', methods=('GET','POST'))
 def login():
-    """ View for login """
+    """ View for logging in """
     form = forms.Login()
 
     if form.validate_on_submit():
