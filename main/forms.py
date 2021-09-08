@@ -56,17 +56,17 @@ def formula_create(*args, **kwargs):
         ### makes it through.
 
         def outtakes(self):
-        """ For displaying validation errors in user input. """
+            """ For displaying validation errors in user input. """
             if self.errors:
                 for error in self.errors.values():
                     flash(*error)
 
 
         def validate_Zahl(self,Zahl):
-        """ The only custom validator for Form_Create.
+            """ The only custom validator for Form_Create.
 
-        The upshot: to verify that we're creating a valid lecture/assignment
-        """
+            The upshot: to verify that we're creating a valid lecture/assignment
+            """
             if self.table == 'homework' or self.table =='lecture':
                 check_exists = database.db_query(
                                         self.table,
@@ -106,11 +106,11 @@ def formula_create(*args, **kwargs):
 
 
 def formula_update(**kwargs):
-   """ Virtually everything below is the same as above.
+    """ Virtually everything below is the same as above.
 
-   The only difference is that kwarg-values here may be
-   tuples in addition to strings.
-   """
+    The only difference is that kwarg-values here may be
+    tuples in addition to strings.
+    """
     class Form_Update(FlaskForm):
         submit = SubmitField()
 

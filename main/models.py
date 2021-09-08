@@ -14,9 +14,9 @@ from main import database
         - the Model's attributes to the row's entries and
         - Model methods to database operations.
     I.e.,
-        Model instance  <~~~>   Table row
-        Model.attribute <~~~>   Row entry
-        Model.method()  <~~~>   Database operation
+         Model instance  <~~~>  Table row
+        Model.attribute  <~~~>  Row entry
+         Model.method()  <~~~>  Database operation
 
     Data transfers between front-end and back precisely when
     Models interact with Forms.  (See 'main.forms' for the
@@ -24,7 +24,7 @@ from main import database
     interfacing the Model's __dict__ with the Form's
     formContent:
 
-        Model.__dict__  <~~~>   Form.formContent
+         Model.__dict__  <~~~>  Form.formContent
 
     That's the gist of it.
 
