@@ -1,19 +1,10 @@
-### CourseWebApp.auth
+""" Module for Authentication Views """
 import sqlite3
 
-from flask import Blueprint
-from flask import flash
-from flask import g
-from flask import redirect
-from flask import render_template
-from flask import request
-from flask import session
-from flask import url_for
-from werkzeug.exceptions import abort
+from flask import Blueprint, flash, g, redirect, render_template, request, session, url_for
 
 from main import database
-from main import models
-from main.auth import forms
+from main.auth import forms, models
 
 
 bp = Blueprint('auth', __name__)
@@ -25,11 +16,10 @@ def register():
     form = forms.Register()
 
     if form.validate_on_submit():
-        form.formulateContent()
-
-        register = models.Model( table='user' )
-        register.__dict__ = form.formContent
-        register.db_insert()
+        register = models.User(
+            username=form.username.data,
+            password=form.password.data )
+        register.save()
 
         flash('Account successfully created')
         return redirect(url_for('auth.login'))
@@ -48,6 +38,7 @@ def login():
     if form.validate_on_submit():
         session.clear()
         session['username'] = form.username.data
+
         flash(f'Logged in.  Welcome, {form.username.data}!')
         return redirect(url_for('index'))
 
@@ -63,11 +54,8 @@ def load_logged_in_user():
     if username is None:
         g.user = None
     else:
-        g.user = database.db_query(
-                    'user',
-                    join=False,
-                    where={'username':username},
-                    all=False )
+        #### Gross :(
+        g.user = vars(models.User.query.filter_by(username=username).first())
 
 
 @bp.route('/logout')

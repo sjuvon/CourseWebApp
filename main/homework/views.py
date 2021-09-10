@@ -1,18 +1,11 @@
-### CourseWebApp.view.homework
-from flask import Blueprint
-from flask import flash
-from flask import g
-from flask import redirect
-from flask import render_template
-from flask import request
-from flask import session
-from flask import url_for
-from werkzeug.exceptions import abort
+""" Module for Homework Views """
+from flask import Blueprint, flash, g, redirect, render_template, request, session, url_for
 
-from main import database
-from main import forms
-from main import models
+from main import forms, uploads
 from main.auth import decorators
+from main.auth.models import User
+from main.database import db_session
+from main.homework import models
 
 
 bp = Blueprint('homework', __name__)
@@ -22,11 +15,7 @@ bp = Blueprint('homework', __name__)
 @decorators.permission_everyone
 def homework_index():
     """ View for Homework index """
-    homeworks_proto = models.Model( table='homework' )
-    homeworks = homeworks_proto.db_select(
-                    join=True,
-                    order='homework.id',
-                    all=True )
+    homeworks = db_session.query(models.Homework).join(User).all()
 
     return render_template('homework/homework.html', homeworks=homeworks)
                                                                 ### END Homework Index
@@ -42,16 +31,20 @@ def homework_create():
                         due='String',
                         title='String',
                         keywords='String',
-                        file_homework='File',
-                        author_id=g.user['id'] )
+                        file_homework='File' )
 
     if form.validate_on_submit():
-        form.formContent['id'] = form.Zahl.data
-        form.formulateContent()
+        filename = uploads.upload(form.file_homework.data, 'homework')
 
-        homework = models.Model( table='homework' )
-        homework.__dict__ = form.formContent
-        homework.db_insert()
+        homework = models.Homework(
+            id=form.Zahl.data,
+            Zahl=form.Zahl.data,
+            due=form.due.data,
+            title=form.title.data,
+            keywords=form.keywords.data,
+            file_homework=filename,
+            author_id=g.user['id'] )
+        homework.save()
 
         flash(f"Homework {form.Zahl.data} successfully created")
         return redirect(url_for('homework.homework_index'))
@@ -67,23 +60,26 @@ def homework_create():
 @decorators.permission_TA
 def homework_update(id):
     """ View for updating Homework """
-    homework = models.Model( table='homework' )
-    homework.db_select( where={'id':id} )
+    homework = models.Homework.query.filter_by(id=id).first()
 
     form = forms.formula_update(
                     table='homework',
+                    id=id,
                     Zahl=('Integer',homework.Zahl),
                     due=('String',homework.due),
                     title=('String',homework.title),
                     keywords=('String',homework.keywords),
                     file_homework=('File',None) )
-    form.formContent = homework.__dict__
 
     if form.validate_on_submit():
-        form.formulateContent()
-
-        homework.__dict__ = form.formContent
-        homework.db_update(id)
+        filename = uploads.upload(form.file_homework.data, 'homework')
+        homework.update(
+            id=form.Zahl.data,
+            Zahl=form.Zahl.data,
+            due=form.due.data,
+            title=form.title.data,
+            keywords=form.keywords.data,
+            file_homework=filename )
 
         flash(f"Homework {id} successfully updated")
         return redirect(url_for('homework.homework_index'))
@@ -99,9 +95,8 @@ def homework_update(id):
 @decorators.permission_professor
 def homework_delete(id):
     """ View for deleting Homework """
-    homework = models.Model( table='homework' )
-    homework.db_select( where={'id':id} )
-    homework.db_delete(id)
+    homework = models.Homework.query.filter_by(id=id).first()
+    homework.delete()
 
     flash(f"Homework {id} successfully deleted")
     return redirect(url_for('homework.homework_index'))

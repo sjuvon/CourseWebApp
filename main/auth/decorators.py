@@ -1,5 +1,5 @@
-### CourseWebApp.auth.decorators
-""" Module for setting role-based Views.
+"""
+    Module for setting role-based Views.
 
     Upon registration, every user is assigned one of four
     roles and role IDs:
@@ -11,12 +11,9 @@
     their role. The hierarchy is set so that every role
     has the permissions of its predecessor.
 """
-
 import functools
 
-from flask import g
-from flask import redirect
-from flask import url_for
+from flask import g, redirect, url_for
 from werkzeug.exceptions import abort
 
 from main.auth import views
@@ -77,22 +74,3 @@ def permission_professor(view):
     return wrapped_view
 
 
-"""
-### Login requirement decorator
-def login_required(view):
-    @functools.wraps(view)
-    def wrapped_view(**kwargs):
-        if g.user is None:
-            return redirect(url_for('auth.login'))
-        return view(**kwargs)
-    return wrapped_view
-    
-
-### Admin requirement decorator
-def admin_required(view):
-    @functools.wraps(view)
-    def wrapped_view(**kwargs):
-        if g.user is None or g.user['username'] != 'admin':         
-            abort(403)
-        return view(**kwargs)
-    return wrapped_view"""

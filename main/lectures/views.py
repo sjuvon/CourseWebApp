@@ -1,18 +1,11 @@
-### CourseWebApp.view.lectures
-from flask import Blueprint
-from flask import flash
-from flask import g
-from flask import redirect
-from flask import render_template
-from flask import request
-from flask import session
-from flask import url_for
-from werkzeug.exceptions import abort
+""" Module for Lecture Views """
+from flask import Blueprint, flash, g, redirect, render_template, request, session, url_for
 
-from main import database
-from main import forms
-from main import models
+from main import forms, uploads
 from main.auth import decorators
+from main.auth.models import User
+from main.database import db_session
+from main.lectures import models
 
 
 bp = Blueprint('lectures', __name__)
@@ -22,19 +15,14 @@ bp = Blueprint('lectures', __name__)
 @decorators.permission_everyone
 def lectures_index():
     """ View for Lectures index """
-    lectures_proto = models.Model( table='lecture' )
-    lectures = lectures_proto.db_select(
-                    join=True,
-                    order='lecture.id',
-                    all=True )
+    lectures = db_session.query(models.Lecture).join(User).all()
 
     ### Gadget for webpage aesthetic.
     ### See BLOCK: CONTENT in lectures.html
-    Max = database.db_query(
-                'lecture',
-                what='MAX(week)' )
-
-    M = 0 if Max[0] is None else Max[0]
+    try:
+        M = max([lecture.week for lecture in lectures])
+    except:
+        M = 0
 
     return render_template('lectures/lectures.html', lectures=lectures, M=M)
                                                                 ### END Lectures Index
@@ -51,16 +39,20 @@ def lectures_create():
                     day='String',
                     title='String',
                     summary='TextArea',
-                    file_lecture='File',
-                    author_id=g.user['id'] )
+                    file_lecture='File' )
 
     if form.validate_on_submit():
-        form.formContent['id'] = form.Zahl.data
-        form.formulateContent()
-
-        lecture = models.Model( table='lecture' )
-        lecture.__dict__ = form.formContent
-        lecture.db_insert()
+        filename = uploads.upload(form.file_lecture.data, 'lectures')
+        lecture = models.Lecture(
+            id=form.Zahl.data,
+            Zahl=form.Zahl.data,
+            week=form.week.data,
+            day=form.day.data,
+            title=form.title.data,
+            summary=form.summary.data,
+            file_lecture=filename,
+            author_id=g.user['id'] )
+        lecture.save()
 
         flash(f"Lecture {form.Zahl.data} successfully created")
         return redirect(url_for('lectures.lectures_index'))
@@ -76,24 +68,28 @@ def lectures_create():
 @decorators.permission_professor
 def lectures_update(id):
     """ View for updating Lectures """
-    lecture = models.Model( table='lecture' )
-    lecture.db_select( where={'id':id} )
+    lecture = models.Lecture.query.filter_by(id=id).first()
 
     form = forms.formula_update(
                     table='lecture',
+                    id=id,
                     week=('Integer',lecture.week),
                     Zahl=('Integer',lecture.Zahl),
                     day=('String',lecture.day),
                     title=('String',lecture.title),
                     summary=('TextArea',lecture.summary),
                     file_lecture=('File',None) )
-    form.formContent = lecture.__dict__
 
     if form.validate_on_submit():
-        form.formulateContent()
-
-        lecture.__dict__ = form.formContent
-        lecture.db_update(id)
+        filename = uploads.upload(form.file_lecture.data, 'lectures')
+        lecture.update(
+            id=form.Zahl.data,
+            Zahl=form.Zahl.data,
+            week=form.week.data,
+            day=form.day.data,
+            title=form.title.data,
+            summary=form.summary.data,
+            file_lecture=filename )
 
         flash(f"Lecture {form.Zahl.data} successfully updated")
         return redirect(url_for('lectures.lectures_index'))
@@ -109,9 +105,8 @@ def lectures_update(id):
 @decorators.permission_professor
 def lectures_delete(id):
     """ View for deleting Lectures """
-    lecture = models.Model( table='lecture' )
-    lecture.db_select( where={'id':id} )
-    lecture.db_delete(id)
+    lecture = models.Lecture.query.filter_by(id=id).first()
+    lecture.delete()
 
     flash(f"Lecture {id} successfully deleted")
     return redirect(url_for('lectures.lectures_index'))

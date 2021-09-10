@@ -62,12 +62,12 @@
 						<div class="announcement_div">
 		  					<h1>{{ announcement['subject'] }}</h1>
 		  					{% if announcement['updated_text'] %}
-								<div class="about">by {{ announcement['username'] }}.
+								<div class="about">by {{ announcement.users['username'] }}.
 			  						<b>Created:</b> {{ announcement['created_text'] }},
 			  						<b>Updated:</b> {{ announcement['updated_text'] }}.
 								</div>
 		  					{% else %}
-								<div class="about">by {{ announcement['username'] }}.
+								<div class="about">by {{ announcement.users['username'] }}.
 			  						<b>Created:</b> {{ announcement['created_text'] }}.
 								</div>
 		  					{% endif %}

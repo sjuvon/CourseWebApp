@@ -1,22 +1,16 @@
-### CourseWebApp.view.index
+""" Module for Index Views """
 import datetime
 import functools
 import os
 
-from flask import Blueprint
-from flask import flash
-from flask import g
-from flask import redirect
-from flask import render_template
-from flask import request
-from flask import session
-from flask import url_for
-from werkzeug.exceptions import abort
+from flask import Blueprint, flash, g, redirect, render_template, request, session, url_for
 
-from main import database
 from main import forms
-from main import models
 from main.auth import decorators
+from main.auth.models import User
+from main.database import db_session
+from main.index.models import Welcome
+from main.announcements.models import Announcement
 
 
 bp = Blueprint('index', __name__)
@@ -26,16 +20,11 @@ bp = Blueprint('index', __name__)
 @decorators.permission_everyone
 def index():
     """ View for main.index """
-    welcomes_proto = models.Model( table='welcome' )
-    welcomes = welcomes_proto.db_select(
-                    limit='1',
-                    all=True )
+    welcomes = db_session.query(Welcome).limit(1).all()
 
-    announcements_proto = models.Model( table='announcement' )
-    announcements = announcements_proto.db_select(
-                        join=True,
-                        order='created DESC',
-                        all=True )
+    announcements = db_session.query(Announcement).join(User).order_by(
+            Announcement.created_text.desc()
+        ).all()
 
     announcements_size = len(announcements)
 
@@ -47,18 +36,15 @@ def index():
 @decorators.permission_professor
 def welcome_create():
     """ View for creating Welcome greeting. """
-    welcome = models.Model( table='welcome' )
-
     form = forms.formula_create(
                     table='welcome',
                     greeting='CKEditor' )
 
     if form.validate_on_submit():
-        form.formContent['author_id'] = g.user['id']
-        form.formulateContent()
-
-        welcome.__dict__ = form.formContent
-        welcome.db_insert()
+        welcome = Welcome(
+            greeting=form.greeting.data,
+            author_id=g.user['id'] )
+        welcome.save()
 
         flash('Welcome greeting created')
         return redirect(url_for('index'))
@@ -66,7 +52,7 @@ def welcome_create():
     else:
         form.outtakes()
 
-    return render_template('index/welcome.html', welcome=welcome, form=form)
+    return render_template('index/welcome.html', form=form)
                                                                 ### END Welcome: Create
 
 
@@ -74,19 +60,14 @@ def welcome_create():
 @decorators.permission_professor
 def welcome_update():
     """ For updating Welcome greeting. """
-    welcome = models.Model( table='welcome' )
-    welcome.db_select( where={'id': 1} )
+    welcome = Welcome.query.filter_by(id=1).first()
 
     form = forms.formula_update( 
                 table='welcome',
                 greeting=('CKEditor',welcome.greeting) )
-    form.formContent = welcome.__dict__
     
     if form.validate_on_submit():
-        form.formulateContent()
-
-        welcome.__dict__ = form.formContent
-        welcome.db_update(1)
+        welcome.update( greeting=form.greeting.data )
 
         flash("Welcome greeting updated")
         return redirect(url_for('index'))

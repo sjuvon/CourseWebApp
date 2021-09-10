@@ -1,160 +1,47 @@
-### CourseWebApp.database
-"""
-    Module for app's main database operations.
-
-    This can be organised into two parts:
-        (1) General database operations
-            for the app
-        (2) Operations specific to user-input
-"""
-
+""" Module for database basics """
 import click
 import os
-import sqlite3
 
-from flask import current_app
-from flask import g
 from flask.cli import with_appcontext
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 from werkzeug.exceptions import abort
 
-
-########################################
-########################################
-### (1) General Database Operations
-########################################
+from config import Config
 
 
-def db_open():
-    """ Open database connection """
-    if 'db' not in g:
-        g.db = sqlite3.connect(
-                    current_app.config['DATABASE'],
-                    detect_types=sqlite3.PARSE_DECLTYPES)
-        g.db.row_factory = sqlite3.Row
-    return g.db
+engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
+db_session = scoped_session(
+    sessionmaker(
+        autocommit=False,
+        autoflush=False,
+        bind=engine)
+    )
 
-
-def db_close(e=None):
-    """ Close database connection """
-    db = g.pop('db', None)
-    if db is not None:
-        db.close()
+Base = declarative_base()
+Base.query = db_session.query_property()
 
 
 def db_init():
-    """ Database schema """
-    db = db_open()
-    with current_app.open_resource('schema.sql') as f:
-        db.executescript(f.read().decode('utf8'))
+    from main.models import Basic, Model
+    from main.announcements.models import Announcement
+    from main.auth.models import User
+    from main.homework.models import Homework
+    from main.index.models import Welcome
+    from main.lectures.models import Lecture
+    Base.metadata.create_all(bind=engine)
 
 
 @click.command('db-init')
 @with_appcontext
 def db_init_command():
-    """ Initialise database in command-line.
-
-    N.B. This will clear existing database and establish new one.
-    """
     db_init()
     click.echo('Database in the pipe, five by five!')
 
 
 def app_init(app):
     """ For the Application Factory """
-    app.teardown_appcontext(db_close)
     app.cli.add_command(db_init_command)
-
-
-########################################
-########################################
-### (2) User-Related Operations
-########################################
-
-
-def scrub(string,special=False):
-    """ To sanitise user inputs for database entry. """
-    if special:
-        S = { '"', "'", ";" }
-        for x in string:
-            if x in S:
-                abort(400)
-        
-    elif not string.isalnum() and '_' not in string:
-        abort(400)
-
-def scrub_list(arr):
-    for entry in arr:
-        scrub(entry)
-
-def scrub_dict(dictionary):
-    for key, value in dictionary.items():
-        scrub(key)
-
-        if key == 'table':
-            scrub(value)
-        elif type(value) == str:
-            scrub(value,special=True)
-        else:
-            pass
-                                                                    ### END scrubbing
-
-
-def db_queryBuilder(
-    operation:str='SELECT', table:str=None, what:str='*', join=False, where:dict=None, order:str=None, limit:str=None, all=False, idd:int=None, dictionary:dict=None):
-    """ For dynamically building SQL query statements.
-
-        There are unfortunately risks of SQL attacks
-        to this.  The preceding 'scrub' functions address some of
-        the risks; these functions should be used in tandem.
-    """
-
-    ### The idea here is to construct the SQL statement
-    ### 'SELECT {what} FROM {table} JOIN user ON {table}.author_id = user.id WHERE {where} ORDER BY {order} LIMIT {limit}'
-    if operation == 'SELECT' or operation == 'select':
-        query = f"SELECT {what} FROM {table}"
-        if join:
-            query = query + f" JOIN user ON {table}.author_id = user.id"        
-        if where:
-            wo = [ f"{table}.{key} = :{key}" for key in where.keys() ]
-            wo = ' AND '.join(wo)
-            query = query + f" WHERE {wo}"
-        if order:
-            query = query + f" ORDER BY {order}"
-        if limit:
-            query = query + f" LIMIT {limit}"
-        return query
-
-    ### 'INSERT INTO {table} {dictionary.keys()} VALUES {values}'
-    elif operation == 'INSERT' or operation == 'insert':
-        values = [ f":{key}" for key in dictionary.keys() ]
-        values = ', '.join(values)
-        values = '(' + values + ')'
-        return f"INSERT INTO {table} {tuple(dictionary.keys())} VALUES {values}"
-
-    ### 'UPDATE {table} SET {set_} WHERE id = '{idd}''
-    elif operation == 'UPDATE' or operation == 'update':        
-        set_ = [ f"{key} = :{key}" for key in dictionary.keys() ]
-        set_ = ', '.join(set_)
-        return f"UPDATE {table} SET {set_} WHERE id = '{idd}'"
-                                                                    ### END db_queryBuilder()
-
-
-def db_query(table:str, what:str='*', join=False, where:dict=None, order:str=None, limit:str=None, all=False):
-    """ A handy function.
-
-    Used as a shortcut for SELECTING from database.
-    See the module 'main.models' for one such usage.
-    """
-    scrub_dict(locals())
-
-    db = db_open()
-    query = db_queryBuilder(
-        operation='SELECT', table=table, what=what, join=join, where=where, order=order, limit=limit, all=all, idd=None, dictionary=None)
-
-    if where:
-        return db.execute(query, where).fetchall() if all else db.execute(query, where).fetchone()
-    else:
-        return db.execute(query).fetchall() if all else db.execute(query).fetchone()
-                                                                    ### END db_query()
 
 

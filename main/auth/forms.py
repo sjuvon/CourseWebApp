@@ -1,43 +1,29 @@
-### CourseWebApp.auth
+""" Module for Authentication Forms """
 import sqlite3
 
-from flask import flash
-from flask import g
+from flask import flash, g
 from flask_wtf import FlaskForm
-from werkzeug.security import check_password_hash
-from werkzeug.security import generate_password_hash
-from wtforms import PasswordField
-from wtforms import StringField
-from wtforms import SubmitField
-from wtforms.validators import DataRequired
-from wtforms.validators import EqualTo
-from wtforms.validators import Length
-from wtforms.validators import ValidationError
+from werkzeug.security import check_password_hash, generate_password_hash
+from wtforms import PasswordField, StringField, SubmitField
+from wtforms.validators import DataRequired, EqualTo, Length, ValidationError
 
 from main import database
-from main import models
+from main.auth import models
 
 
 class Register(FlaskForm):
     """ Registration form """
     username = StringField(
-        'Username', validators=[DataRequired(), Length(min=3, message='Username must have at least %(min)d characters')])
+        'Username',validators=[DataRequired(), Length(min=3, message='Username must have at least %(min)d characters')])
     password = PasswordField(
         'Password', validators=[DataRequired(), Length(min=4, message='Password must have at least %(min)d characters')])
     password_confirm = PasswordField(
         'Confirm Password', validators=[DataRequired(), EqualTo('password', message='Passwords must match')])
     submit = SubmitField(label=('Register'))
 
-    formContent = { 'username': None, 'password': None }
-    def formulateContent(self):
-        self.formContent['username'] = self.username.data
-        self.formContent['password'] = generate_password_hash(self.password.data)
-
 
     def validate_username(self,username):
-
-        database.scrub(self.username.data)
-        query = database.db_query('user', join=False, where={ 'username': self.username.data }, all=False)
+        query = models.User.query.filter_by(username=self.username.data).first()
 
         if query is not None:
             raise ValidationError(
@@ -58,14 +44,12 @@ class Login(FlaskForm):
 
 
     def validate_username(self,username):
-
-        database.scrub(self.username.data)
-        user = database.db_query('user', join=False, where={ 'username': self.username.data }, all=False)
+        user = models.User.query.filter_by(username=self.username.data).first()
         
         if user is None:
             raise ValidationError(
                 f"Username {self.username.data} does not exist")
-        elif not check_password_hash(user['password'], self.password.data):
+        elif not check_password_hash(user.password, self.password.data):
             raise ValidationError("Incorrect password")
 
     def outtakes(self):

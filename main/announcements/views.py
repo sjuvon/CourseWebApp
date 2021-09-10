@@ -1,19 +1,11 @@
-### CourseWebApp.announcements
+""" Module for Announcement Views """
 import datetime
 
-from flask import Blueprint
-from flask import flash
-from flask import g
-from flask import redirect
-from flask import render_template
-from flask import request
-from flask import session
-from flask import url_for
-from werkzeug.exceptions import abort
+from flask import Blueprint, flash, g, redirect, render_template, request, session, url_for
 
-from main import database
 from main import forms
-from main import models
+from main.auth import models
+from main.announcements import models
 from main.auth import decorators
 
 
@@ -27,16 +19,15 @@ def announcements_create():
     form = forms.formula_create(
                     table='announcement',
                     subject='String',
-                    body='TextArea',
-                    author_id=g.user['id'] )
+                    body='TextArea' )
 
     if form.validate_on_submit():
-        form.formContent['created_text'] = datetime.datetime.now().astimezone().strftime('%d %b %Y at %H:%M %Z')
-        form.formulateContent()
-
-        announcement = models.Model( table='announcement' )
-        announcement.__dict__ = form.formContent
-        announcement.db_insert()
+        announcement = models.Announcement(
+                            subject=form.subject.data,
+                            body=form.body.data,
+                            created_text=datetime.datetime.now().astimezone().strftime('%d %b %Y at %H:%M %Z'),
+                            author_id=g.user['id'] )
+        announcement.save()
 
         flash('Announcement successfully posted')
         return redirect(url_for('index'))
@@ -52,23 +43,18 @@ def announcements_create():
 @decorators.permission_TA
 def announcements_update(id):
     """ View for updating Announcements. """
-    announcement = models.Model( table='announcement' )
-    announcement.db_select(
-                        where={ 'id': id } )
+    announcement = models.Announcement.query.filter_by(id=id).first()
 
     form = forms.formula_update(
                     table='announcement',
                     subject=('String',announcement.subject),
                     body=('TextArea',announcement.body) )
-    
-    form.formContent = announcement.__dict__
 
-    if form.validate_on_submit():
-        form.formContent['updated_text'] = datetime.datetime.now().astimezone().strftime('%d %b %Y at %H:%M %Z')
-        form.formulateContent()
-        
-        announcement.__dict__ = form.formContent
-        announcement.db_update(id)
+    if form.validate_on_submit():        
+        announcement.update(
+            subject=form.subject.data,
+            body=form.body.data,
+            updated_text=datetime.datetime.now().astimezone().strftime('%d %b %Y at %H:%M %Z') )
 
         flash('Announcement successfully updated')
         return redirect(url_for('index'))
@@ -84,9 +70,8 @@ def announcements_update(id):
 @decorators.permission_TA
 def announcements_delete(id):
     """ View for deleting Announcements. """
-    announcement = models.Model( table='announcement' )
-    announcement.db_select( where={ 'id':id } )
-    announcement.db_delete(id)
+    announcement = models.Announcement.query.filter_by(id=id).first()
+    announcement.delete()
 
     flash('Announcement successfully deleted')
     return redirect(url_for('index'))

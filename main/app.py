@@ -1,22 +1,18 @@
-### CourseWebApp.app
-"""
-    Main app module containing the Application Factory
-"""
-
+""" Main app module containing the Application Factory """
 import os
 import random
+import sqlalchemy
 
 from flask import Flask
 from flask_ckeditor import CKEditor
-
 from config import Config
 
 from main import database
 from main.announcements.views import bp as bp_announcements
 from main.auth.views import bp as bp_auth
 from main.homework.views import bp as bp_homework
+from main.index.views import bp as bp_index
 from main.lectures.views import bp as bp_lectures
-from main.views import bp as bp_index
 
 
 def create_app():
@@ -24,22 +20,13 @@ def create_app():
     app.config.from_object(Config)
 
     app.jinja_env.add_extension('jinja2.ext.loopcontrols')
-    CKEditor().init_app(app)
 
     database.app_init(app)
+
     register_blueprints(app)
+    register_extensions(app)
 
-    @app.before_request
-    def vor():
-        database.db_open()
-
-    @app.after_request
-    def nach(response):
-        database.db_close()
-        return response
-
-
-    ### Signs of life
+    #### Signs of life
     @app.route('/gg')
     def hello():
         quotes = [
@@ -64,6 +51,11 @@ def create_app():
             "Hang on, we're in for some chop!",
             "Ab-so-lutely!"]
         return random.choices(quotes).pop()
+
+
+    @app.teardown_appcontext
+    def shutdown_session(exception=None):
+        database.db_session.remove()
         
 
     return app
@@ -77,5 +69,10 @@ def register_blueprints(app):
     app.register_blueprint(bp_announcements)
     app.register_blueprint(bp_homework)
     app.register_blueprint(bp_lectures)
+
+
+def register_extensions(app):
+    CKEditor().init_app(app)
+
 
 
