@@ -19,7 +19,7 @@ class Announcement(Model):
 
     subject = Column(db.Text, nullable=False)
     body = Column(db.Text, nullable=False)
-    created = Column(db.DateTime, nullable=False, default=datetime.datetime.now().astimezone())
+    created = Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     created_text = Column(db.Text, nullable=False)
     updated_text = Column(db.Text, nullable=True)
     author_id = Column(db.Integer, db.ForeignKey("user.id"), nullable=False)

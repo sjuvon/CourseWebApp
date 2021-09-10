@@ -23,7 +23,7 @@ def index():
     welcomes = db_session.query(Welcome).limit(1).all()
 
     announcements = db_session.query(Announcement).join(User).order_by(
-            Announcement.created_text.desc()
+            Announcement.created.desc()
         ).all()
 
     announcements_size = len(announcements)
