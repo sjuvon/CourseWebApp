@@ -16,6 +16,7 @@ Column = db.Column
 class Lecture(Model):
     __table_args__ = {'extend_existing': True}
 
+    id = Column(db.Integer, primary_key=True)
     Zahl = Column(db.Integer, nullable=False)
     week = Column(db.Integer, nullable=False)
     day = Column(db.String(32), nullable=False)

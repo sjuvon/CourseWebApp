@@ -24,9 +24,9 @@ Column = db.Column
 class Basic():
     """ Mixin for CRUD operations. """
     def save(self, commit=True):
-        db_session.add(self)
+        db_session().add(self)
         if commit:
-            db_session.commit()
+            db_session().commit()
         return self
 
     def update(self, commit=True, **kwargs):
@@ -37,9 +37,9 @@ class Basic():
         return self
 
     def delete(self, commit=True):
-        db_session.delete(self)
+        db_session().delete(self)
         if commit:
-            return db_session.commit()
+            return db_session().commit()
 
 
 class Model(Basic, Base):
@@ -51,7 +51,6 @@ class Model(Basic, Base):
     def __tablename__(cls):
         return cls.__name__.lower()
 
-    id = Column(db.Integer, primary_key=True)
 
 
 

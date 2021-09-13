@@ -15,7 +15,7 @@ bp = Blueprint('homework', __name__)
 @decorators.permission_everyone
 def homework_index():
     """ View for Homework index """
-    homeworks = db_session.query(models.Homework).join(User).all()
+    homeworks = models.Homework.query.join(User).all()
 
     return render_template('homework/homework.html', homeworks=homeworks)
                                                                 ### END Homework Index

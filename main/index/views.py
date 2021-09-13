@@ -20,9 +20,9 @@ bp = Blueprint('index', __name__)
 @decorators.permission_everyone
 def index():
     """ View for main.index """
-    welcomes = db_session.query(Welcome).limit(1).all()
+    welcomes = Welcome.query.limit(1).all()
 
-    announcements = db_session.query(Announcement).join(User).order_by(
+    announcements = Announcement.query.join(User).order_by(
             Announcement.created.desc()
         ).all()
 

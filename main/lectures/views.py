@@ -15,7 +15,7 @@ bp = Blueprint('lectures', __name__)
 @decorators.permission_everyone
 def lectures_index():
     """ View for Lectures index """
-    lectures = db_session.query(models.Lecture).join(User).all()
+    lectures = models.Lecture.query.join(User).all()
 
     ### Gadget for webpage aesthetic.
     ### See BLOCK: CONTENT in lectures.html

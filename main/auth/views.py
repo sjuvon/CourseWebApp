@@ -18,7 +18,8 @@ def register():
     if form.validate_on_submit():
         register = models.User(
             username=form.username.data,
-            password=form.password.data )
+            password=form.password.data
+        )
         register.save()
 
         flash('Account successfully created')

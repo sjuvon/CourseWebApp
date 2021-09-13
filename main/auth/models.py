@@ -16,6 +16,7 @@ Column = db.Column
 class User(Model):
     __table_args__ = {'extend_existing': True} # Why is this happening?  Where are the redundancies coming from?
 
+    id = Column(db.Integer, primary_key=True)
     username = Column(db.String(32), unique=True, nullable=False)
     password = Column(db.String(256), nullable=False)
     created = Column(db.DateTime, nullable=False, default=datetime.datetime.now().astimezone())
@@ -43,6 +44,7 @@ class User(Model):
 class Role(Model):
     __table_args__ = { 'extend_existing': True }
 
+    id = Column(db.Integer, primary_key=True)
     role_name = Column(db.String(16), unique=True, nullable=False, default='student')
     users = relationship("main.auth.models.User", back_populates="roles")
 

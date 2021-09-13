@@ -3,7 +3,7 @@ import os
 import random
 import sqlalchemy
 
-from flask import Flask
+from flask import Flask, g
 from flask_ckeditor import CKEditor
 from config import Config
 
@@ -22,6 +22,16 @@ def create_app():
     app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 
     database.app_init(app)
+
+
+    @app.before_request
+    def session_start():
+        session_start = database.db_session()
+
+    @app.teardown_appcontext
+    def session_shutdown(exception=None):
+        database.db_session.remove()
+
 
     register_blueprints(app)
     register_extensions(app)
@@ -51,12 +61,6 @@ def create_app():
             "Hang on, we're in for some chop!",
             "Ab-so-lutely!"]
         return random.choices(quotes).pop()
-
-
-    @app.teardown_appcontext
-    def shutdown_session(exception=None):
-        database.db_session.remove()
-        
 
     return app
 

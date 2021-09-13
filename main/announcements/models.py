@@ -17,6 +17,7 @@ class Announcement(Model):
 
     __table_args__ = {'extend_existing': True}
 
+    id = Column(db.Integer, primary_key=True)
     subject = Column(db.Text, nullable=False)
     body = Column(db.Text, nullable=False)
     created = Column(db.DateTime, nullable=False, default=db.func.current_timestamp())

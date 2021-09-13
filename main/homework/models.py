@@ -16,6 +16,7 @@ Column = db.Column
 class Homework(Model):
     __table_args__ = {'extend_existing': True}
 
+    id = Column(db.Integer, primary_key=True)
     Zahl = Column(db.Integer, nullable=False)
     due = Column(db.String(32), nullable=False)
     title = Column(db.String(128), nullable=False)
