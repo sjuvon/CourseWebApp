@@ -2,7 +2,7 @@
 
 Welcome!  This project is something I've wanted to do for a long time: make a proper web app for the courses I teach.  It's great to finally get the ball rolling.
 
-The app is implemented in Flask together with the extensions Flask-WTF and Flask-CKEditor; for the back-end we have SQLite3 via SQLAlchemy.  The app's content itself is based on a course I taught in Spring 2019.
+The app is implemented in Flask together with the extensions Flask-WTF and Flask-CKEditor; for the back-end we have SQLite3 (for now) via SQLAlchemy.  The app's content itself is based on a course I taught in Spring 2019.
 
 Check it out!  The app's [hosted here on Heroku](https://coursewebapp.herokuapp.com/).  For kicks, you can compare everything to the original HTML page I used in Spring '19—see: '7142.html'.
 
