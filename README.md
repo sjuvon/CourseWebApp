@@ -4,7 +4,7 @@ Welcome!  This project is something I've wanted to do for a long time: make a pr
 
 The app is implemented in Flask together with the extensions Flask-WTF and Flask-CKEditor; for the back-end we have SQLite3 (for now) via SQLAlchemy.  The app's content itself is based on a course I taught in Spring 2019.
 
-Check it out!  The app's [hosted here on Heroku](https://coursewebapp.herokuapp.com/).  For kicks, you can compare everything to the original HTML page I used in Spring '19—see: '7142.html'.
+Check it out!  The app's [hosted here on Heroku](https://coursewebapp.herokuapp.com/) (best viewed on Desktop).  For kicks, you can compare everything to the original HTML page I used in Spring '19—see: '7142.html'.
 
 Some helpful bits if you decide to clone the repository:
 
