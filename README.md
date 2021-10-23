@@ -13,7 +13,7 @@ Some helpful bits if you decide to clone the repository:
         Username: *admin*  
         Password: *password*
   
-  2) Once you have your virtual environment [set up](https://flask.palletsprojects.com/en/2.0.x/installation/) (Python, Flask, Flask-WTF, Flask-CKEditor, SQLAlchemy), fire up the app from its top directory with the usual Flask commands:
+  2) Once you have your [virtual environment set up](https://flask.palletsprojects.com/en/2.0.x/installation/) (Python, Flask, Flask-WTF, Flask-CKEditor, SQLAlchemy), fire up the app from its top directory with the usual Flask commands:
   
           $ export FLASK_APP=run.py
           $ export FLASK_ENV=development
