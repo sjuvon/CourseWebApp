@@ -19,4 +19,4 @@ Some helpful bits if you decide to clone the repository:
           $ export FLASK_ENV=development
           $ flask run
           
-There's more to come—stay tuned for updates and more projects!
+Stay tuned—there's more to come!
